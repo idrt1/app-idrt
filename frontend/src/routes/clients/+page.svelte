@@ -5,6 +5,12 @@
     import { Label } from "$lib/components/ui/label"
     import { Tabs, TabsContent, TabsList, TabsTrigger } from "$lib/components/ui/tabs"
     import { Textarea } from "$lib/components/ui/textarea"
+    import Calendar from "./Calendar.svelte";
+    import * as Select from "$lib/components/ui/select";
+    const syndique = [
+        { value: "N", label: "N" },
+        { value: "D", label: "D" }
+    ];
 </script>
 
 <div class="container mx-auto p-4 space-y-6">
@@ -30,14 +36,47 @@
                         <Input id="titre-type" placeholder="Entrée le titre" />
                     </div>
                 </div>
+                <div class="space-y-2 flex flex-col">
+                    <div class="space-y-2">
+                        <Label for="image">Image</Label>
+                        <Input id="image" type="file" />
+                    </div>
+                    <div class="space-y-2">
+                        <Label for="telephone-type">Téléphone</Label>
+                        <Input id="telephone-type" placeholder="Entrée le numéro de téléphone" />
+                    </div>
+                    <div class="space-y-2">
+                        <Label for="email">Email</Label>
+                        <Input type="email" id="email" placeholder="email" />
+                    </div>
+                    <div class="space-y-2 flex flex-row">
+                        <Calendar />
+                        <div class="flex flex-col">
+                            <Label for="syndique">Syndiqué</Label>
+                            <Select.Root portal={null}>
+                                <Select.Trigger class="w-[180px]">
+                                    <Select.Value placeholder="Syndiqué" />
+                                </Select.Trigger>
+                                <Select.Content>
+                                    <Select.Group>
+                                        <Select.Label>Syndiqué</Select.Label>
+                                        {#each syndique as syndique}
+                                            <Select.Item value={syndique.value} label={syndique.label}>
+                                                {syndique.label}
+                                            </Select.Item>
+                                        {/each}
+                                    </Select.Group>
+                                </Select.Content>
+                                <Select.Input name="syndique" />
+                            </Select.Root>
+                        </div>
 
-                <div class="grid w-full max-w-sm items-center gap-1.5">
-                    <Label for="image">Image</Label>
-                    <Input id="image" type="file" />
+                    </div>
                 </div>
             </div>
         </CardContent>
     </Card>
+
 
     <Tabs value="union" class="w-full">
         <TabsList class="grid w-full grid-cols-4">
