@@ -6,6 +6,7 @@
     import { Tabs, TabsContent, TabsList, TabsTrigger } from "$lib/components/ui/tabs"
     import { Textarea } from "$lib/components/ui/textarea"
     import Calendar from "./Calendar.svelte";
+    import Client from "./Client.svelte";
     import * as Select from "$lib/components/ui/select";
     const syndique = [
         { value: "N", label: "N" },
@@ -120,21 +121,7 @@
             </Card>
         </TabsContent>
         <TabsContent value="person" class="mt-4">
-            <Card class="border-[#1DAA51]/50">
-                <CardHeader>
-                    <CardTitle>Person Information</CardTitle>
-                </CardHeader>
-                <CardContent class="space-y-4">
-                    <div class="space-y-2">
-                        <Label for="person-name">Name</Label>
-                        <Input id="person-name" placeholder="Enter person's name" />
-                    </div>
-                    <div class="space-y-2">
-                        <Label for="person-role">Role</Label>
-                        <Input id="person-role" placeholder="Enter person's role" />
-                    </div>
-                </CardContent>
-            </Card>
+            <Client />
         </TabsContent>
         <TabsContent value="remark" class="mt-4">
             <Card class="border-[#0da2e7]/50">
