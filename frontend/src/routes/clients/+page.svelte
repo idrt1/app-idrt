@@ -7,6 +7,7 @@
     import { Textarea } from "$lib/components/ui/textarea"
     import Calendar from "./Calendar.svelte";
     import Client from "./Client.svelte";
+    import Cabinet from "./Cabinet.svelte";
     import * as Select from "$lib/components/ui/select";
     const syndique = [
         { value: "N", label: "N" },
@@ -71,7 +72,6 @@
                                 <Select.Input name="syndique" />
                             </Select.Root>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -104,21 +104,7 @@
             </Card>
         </TabsContent>
         <TabsContent value="firm" class="mt-4">
-            <Card class="border-[#facc14]/50">
-                <CardHeader>
-                    <CardTitle>Firm Information</CardTitle>
-                </CardHeader>
-                <CardContent class="space-y-4">
-                    <div class="space-y-2">
-                        <Label for="firm-name">Firm Name</Label>
-                        <Input id="firm-name" placeholder="Enter firm name" />
-                    </div>
-                    <div class="space-y-2">
-                        <Label for="firm-address">Firm Address</Label>
-                        <Input id="firm-address" placeholder="Enter firm address" />
-                    </div>
-                </CardContent>
-            </Card>
+            <Cabinet />
         </TabsContent>
         <TabsContent value="person" class="mt-4">
             <Client />
