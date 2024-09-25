@@ -17,7 +17,7 @@
 
 <Card class="border-[#facc14]/50">
     <CardHeader>
-        <CardTitle>Cabinet information</CardTitle>
+        <CardTitle>Information du cabinet</CardTitle>
     </CardHeader>
     <CardContent class="space-y-4">
         <div class="space-y-2">
@@ -29,8 +29,8 @@
             <Input id="cabinet-type" placeholder="Entré un type" />
         </div>
         <div class="space-y-2">
-            <Label for="cabinet-application">Application</Label>
-            <Input id="cabinet-application" placeholder="Entré une application" />
+            <Label for="cabinet-association">Association</Label>
+            <Input id="cabinet-association" placeholder="Entré une association" />
         </div>
 
         <div class="flex items-center space-x-2">
@@ -74,7 +74,7 @@
                     </div>
                     <div class="flex items-center space-x-2">
                         <Checkbox id="aide" bind:checked={roles.aide} />
-                        <Label for="aide" class="text-sm font-medium">Aide ménagère</Label>
+                        <Label for="aide" class="text-sm font-medium">Aide assistante</Label>
                     </div>
                 </div>
             </div>

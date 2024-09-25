@@ -8,6 +8,7 @@
     import Calendar from "./Calendar.svelte";
     import Client from "./Client.svelte";
     import Cabinet from "./Cabinet.svelte";
+    import Syndicat from "./Syndicat.svelte";
     import * as Select from "$lib/components/ui/select";
     const syndique = [
         { value: "N", label: "N" },
@@ -16,8 +17,10 @@
 </script>
 
 <div class="container mx-auto p-4 space-y-6">
-    <h1 class="text-3xl font-bold">Nouveau client</h1>
-
+    <div class="flex flex-row justify-between">
+        <h1 class="text-3xl font-bold">Nouveau client</h1>
+        <Button variant="outline" href="/">Accueil</Button>
+    </div>
     <Card>
         <CardHeader>
             <CardTitle>Informations principales</CardTitle>
@@ -87,21 +90,7 @@
             <TabsTrigger value="remark" class="data-[state=active]:bg-[#0da2e7]/30">Remarque</TabsTrigger>
         </TabsList>
         <TabsContent value="union" class="mt-4">
-            <Card class="border-[#EF4343]/50">
-                <CardHeader>
-                    <CardTitle>Union Information</CardTitle>
-                </CardHeader>
-                <CardContent class="space-y-4">
-                    <div class="space-y-2">
-                        <Label for="union-name">Union Name</Label>
-                        <Input id="union-name" placeholder="Enter union name" />
-                    </div>
-                    <div class="space-y-2">
-                        <Label for="union-number">Union Number</Label>
-                        <Input id="union-number" placeholder="Enter union number" />
-                    </div>
-                </CardContent>
-            </Card>
+            <Syndicat />
         </TabsContent>
         <TabsContent value="firm" class="mt-4">
             <Cabinet />
@@ -125,7 +114,7 @@
     </Tabs>
 
     <div class="flex justify-end space-x-4">
-        <Button variant="outline">Cancel</Button>
-        <Button>Save Client</Button>
+        <Button variant="outline">Annuler</Button>
+        <Button>Enregistrer le client</Button>
     </div>
 </div>
