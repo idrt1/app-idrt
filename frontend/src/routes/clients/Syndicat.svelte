@@ -18,18 +18,18 @@
     let checked: boolean = false;
 
     const installation = [
-        { value: "Libéral", label: "M" },
-        { value: "Collaborateur", label: "F" },
-        { value: "Salarié", label: "O" },
-        { value: "Retraité", label: "N" },
-        { value: "Etudiant", label: "A" },
-        { value: "Mutuelle", label: "B" },
-        { value: "Contrôlleur", label: "C" },
+        { value: "Libéral", label: "Libéral" },
+        { value: "Collaborateur", label: "Collaborateur" },
+        { value: "Salarié", label: "Salarié" },
+        { value: "Retraité", label: "Retraité" },
+        { value: "Etudiant", label: "Etudiant" },
+        { value: "Mutuelle", label: "Mutuelle" },
+        { value: "Contrôlleur", label: "Contrôlleur" },
     ];
 
     const categorie = [
         { value : "A", label: "A" },
-        { value : "A1/2", label: "B" },
+        { value : "A1/2", label: "A1/2" },
         { value : "CA", label: "C" },
         { value : "CS", label: "D" },
         { value : "CS1/2", label: "E" },
