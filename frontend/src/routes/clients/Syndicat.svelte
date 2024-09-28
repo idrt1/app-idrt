@@ -8,10 +8,37 @@
     import { Calendar } from "$lib/components/ui/calendar/index.js";
     import * as Popover from "$lib/components/ui/popover/index.js";
     import { Button } from "$lib/components/ui/button";
+    import {Checkbox} from "$lib/components/ui/checkbox";
+    import * as Select from "$lib/components/ui/select";
 
     const df = new DateFormatter("en-US", { dateStyle: "long" });
     let startDate: DateValue | undefined = undefined;
     let endDate: DateValue | undefined = undefined;
+
+    let checked: boolean = false;
+
+    const installation = [
+        { value: "Libéral", label: "M" },
+        { value: "Collaborateur", label: "F" },
+        { value: "Salarié", label: "O" },
+        { value: "Retraité", label: "N" },
+        { value: "Etudiant", label: "A" },
+        { value: "Mutuelle", label: "B" },
+        { value: "Contrôlleur", label: "C" },
+    ];
+
+    const categorie = [
+        { value : "A", label: "A" },
+        { value : "A1/2", label: "B" },
+        { value : "CA", label: "C" },
+        { value : "CS", label: "D" },
+        { value : "CS1/2", label: "E" },
+        { value : "etd", label: "C" },
+        { value : "P35", label: "D" },
+        { value : "P351/2", label: "E" },
+    ];
+
+
 </script>
 
 <Card class="border-[#EF4343]/50">
@@ -51,6 +78,54 @@
         <div class="space-y-2">
             <Label for="syndicat-coti">Premier an coti</Label>
             <Input id="syndicat-coti" placeholder="Entré un premier an" />
+        </div>
+        <div class="flex items-center space-x-2">
+            <Checkbox id="terms-yes" bind:checked aria-labelledby="terms-label-yes" />
+            <Label id="terms-label-yes" for="terms-yes" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                O
+            </Label>
+            <Checkbox id="terms-no" bind:checked aria-labelledby="terms-label-no" />
+            <Label id="terms-label-no" for="terms-no" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                N
+            </Label>
+        </div>
+        <div class="space-y-2">
+            <Label for="installation">Installation</Label>
+            <Select.Root portal={null}>
+                <Select.Trigger class="w-full">
+                    <Select.Value placeholder="Type d'installation" />
+                </Select.Trigger>
+                <Select.Content>
+                    <Select.Group>
+                        <Select.Label>Installation</Select.Label>
+                        {#each installation as installation}
+                            <Select.Item value={installation.value} label={installation.label}>
+                                {installation.label}
+                            </Select.Item>
+                        {/each}
+                    </Select.Group>
+                </Select.Content>
+                <Select.Input name="installation" />
+            </Select.Root>
+        </div>
+        <div class="space-y-2">
+            <Label for="installation">Categorie</Label>
+            <Select.Root portal={null}>
+                <Select.Trigger class="w-full">
+                    <Select.Value placeholder="Categorie" />
+                </Select.Trigger>
+                <Select.Content>
+                    <Select.Group>
+                        <Select.Label>Categorie</Select.Label>
+                        {#each categorie as categorie}
+                            <Select.Item value={categorie.value} label={categorie.label}>
+                                {categorie.label}
+                            </Select.Item>
+                        {/each}
+                    </Select.Group>
+                </Select.Content>
+                <Select.Input name="categorie" />
+            </Select.Root>
         </div>
         <div class="space-y-2">
             <Label for="syndicat-number">Union Number</Label>

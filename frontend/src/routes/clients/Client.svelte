@@ -17,6 +17,7 @@
     import { Calendar } from "$lib/components/ui/calendar/index.js";
     import * as Popover from "$lib/components/ui/popover/index.js";
     import { Button } from "$lib/components/ui/button";
+    import {Checkbox} from "$lib/components/ui/checkbox";
 
     const df = new DateFormatter("en-US", { dateStyle: "long" });
     let value: DateValue | undefined = undefined;
