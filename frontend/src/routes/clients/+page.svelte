@@ -117,7 +117,7 @@
                 <CardContent>
                     <div class="space-y-2">
                         <Label for="remarks">Remarque supplémentaires</Label>
-                        <Textarea id="remarks" placeholder="Entré des remarque supplémentaires" rows={4} />
+                        <Textarea id="remarks" placeholder="Entré des remarque supplémentaires" rows={4} bind:value={clients.remarques} />
                     </div>
                 </CardContent>
             </Card>
