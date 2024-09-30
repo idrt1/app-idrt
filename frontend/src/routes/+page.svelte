@@ -13,10 +13,6 @@
                 <PlusCircle class="mr-2 h-5 w-5" />
                 Ajouter un client
             </Button>
-            <Button class="w-full" size="lg">
-                <PlusCircle class="mr-2 h-5 w-5" />
-                Ajouter un
-            </Button>
             <div class="relative">
                 <Input
                         type="search"

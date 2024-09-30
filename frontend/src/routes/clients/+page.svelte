@@ -1,11 +1,10 @@
-<script>
+<script lang="ts">
     import { Button } from "$lib/components/ui/button";
     import { Card, CardContent, CardHeader, CardTitle } from "$lib/components/ui/card"
     import { Input } from "$lib/components/ui/input"
     import { Label } from "$lib/components/ui/label"
     import { Tabs, TabsContent, TabsList, TabsTrigger } from "$lib/components/ui/tabs"
     import { Textarea } from "$lib/components/ui/textarea"
-    import Calendar from "./Calendar.svelte";
     import Client from "./Client.svelte";
     import Cabinet from "./Cabinet.svelte";
     import Syndicat from "./Syndicat.svelte";
@@ -13,6 +12,22 @@
 
     import { InsertClient } from "$lib/wailsjs/go/client/ClientMananger";
     import { client } from "$lib/wailsjs/go/models";
+
+    import CalendarIcon from "lucide-svelte/icons/calendar";
+    import {
+        DateFormatter,
+        type DateValue,
+        getLocalTimeZone
+    } from "@internationalized/date";
+    import { cn } from "$lib/utils.js";
+    import { Calendar } from "$lib/components/ui/calendar/index.js";
+    import * as Popover from "$lib/components/ui/popover/index.js";
+
+    const df = new DateFormatter("en-US", {
+        dateStyle: "long"
+    });
+
+    let value: DateValue | undefined = undefined;
 
     const syndique = [
         { value: "N", label: "N" },
@@ -66,10 +81,27 @@
                         <Input type="email" id="email" placeholder="email" bind:value={clients.adresseElectronique}/>
                     </div>
                     <div class="space-y-2 flex flex-row">
-                        <Calendar />
+                        <Popover.Root>
+                            <div class="flex flex-col space-y-2 mr-3">
+                                <Label for="date">Date de paiement</Label>
+                                <Popover.Trigger asChild let:builder>
+                                    <Button variant="outline" class={cn("w-[280px] justify-start text-left font-normal", !value && "text-muted-foreground")} builders={[builder]}>
+                                        <CalendarIcon class="mr-2 h-4 w-4" />
+                                        {value ? df.format(value.toDate(getLocalTimeZone())) : "Choisir une date"}
+                                    </Button>
+                                </Popover.Trigger>
+                            </div>
+                            <Popover.Content class="w-auto p-0">
+                                <Calendar bind:value initialFocus />
+                            </Popover.Content>
+                        </Popover.Root>
                         <div class="flex flex-col">
                             <Label for="syndique">Syndiqué</Label>
-                            <Select.Root portal={null}>
+                            <Select.Root portal={null} selected={{
+                                value:clients.syndique,
+                                label:syndique.find(v=>v.value === clients.syndique)?.label
+                            }}
+                            onSelectedChange={(v) => v && (clients.syndique = v.value)}>
                                 <Select.Trigger class="w-[180px]">
                                     <Select.Value placeholder="Syndiqué" />
                                 </Select.Trigger>
@@ -83,7 +115,7 @@
                                         {/each}
                                     </Select.Group>
                                 </Select.Content>
-                                <Select.Input name="syndique" bind:value={clients.syndique} />
+                                <Select.Input name="syndique"/>
                             </Select.Root>
                         </div>
                     </div>
@@ -101,7 +133,7 @@
             <TabsTrigger value="remark" class="data-[state=active]:bg-[#0da2e7]/30">Remarque</TabsTrigger>
         </TabsList>
         <TabsContent value="union" class="mt-4">
-            <Syndicat />
+            <Syndicat bind:clients/>
         </TabsContent>
         <TabsContent value="firm" class="mt-4">
             <Cabinet />

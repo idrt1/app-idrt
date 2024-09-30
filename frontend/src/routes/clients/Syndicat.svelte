@@ -10,12 +10,15 @@
     import { Button } from "$lib/components/ui/button";
     import {Checkbox} from "$lib/components/ui/checkbox";
     import * as Select from "$lib/components/ui/select";
+    import {client} from "$lib/wailsjs/go/models";
 
     const df = new DateFormatter("en-US", { dateStyle: "long" });
     let startDate: DateValue | undefined = undefined;
     let endDate: DateValue | undefined = undefined;
 
     let checked: boolean = false;
+
+    export let clients : client.Client;
 
     const installation = [
         { value: "Libéral", label: "Libéral" },
