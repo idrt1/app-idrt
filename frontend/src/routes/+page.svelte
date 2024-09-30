@@ -2,7 +2,6 @@
     import { Button } from "$lib/components/ui/button";
     import { Input } from "$lib/components/ui/input"
     import { PlusCircle, Search } from "lucide-svelte"
-    import { Insert } from "$lib/wailsjs/go/main/App"
 </script>
 
 
@@ -14,7 +13,7 @@
                 <PlusCircle class="mr-2 h-5 w-5" />
                 Ajouter un client
             </Button>
-            <Button class="w-full" size="lg" on:click={Insert}>
+            <Button class="w-full" size="lg">
                 <PlusCircle class="mr-2 h-5 w-5" />
                 Ajouter un
             </Button>

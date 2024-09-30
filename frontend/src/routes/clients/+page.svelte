@@ -10,10 +10,21 @@
     import Cabinet from "./Cabinet.svelte";
     import Syndicat from "./Syndicat.svelte";
     import * as Select from "$lib/components/ui/select";
+
+    import { InsertClient } from "$lib/wailsjs/go/client/ClientMananger";
+    import { client } from "$lib/wailsjs/go/models";
+
     const syndique = [
         { value: "N", label: "N" },
         { value: "D", label: "D" }
     ];
+    let clients = new client.Client();
+
+    function generate() {
+        InsertClient(clients).then((result) => {
+            console.log(result);
+        });
+    }
 </script>
 
 <div class="container mx-auto p-4 space-y-6">
@@ -30,15 +41,15 @@
                 <div class="space-y-2 flex flex-col">
                     <div class="space-y-2">
                         <Label for="nom-type">Nom</Label>
-                        <Input id="nom-type" placeholder="Entrée le Nom" />
+                        <Input id="nom-type" placeholder="Entrée le Nom" bind:value={clients.nom}/>
                     </div>
                     <div class="space-y-2">
                         <Label for="prenom-type">Prénom</Label>
-                        <Input id="prenom-type" placeholder="Entrée le prénom" />
+                        <Input id="prenom-type" placeholder="Entrée le prénom" bind:value={clients.prenom}/>
                     </div>
                     <div class="space-y-2">
                         <Label for="titre-type">Titre</Label>
-                        <Input id="titre-type" placeholder="Entrée le titre" />
+                        <Input id="titre-type" placeholder="Entrée le titre" bind:value={clients.titre}/>
                     </div>
                 </div>
                 <div class="space-y-2 flex flex-col">
@@ -48,11 +59,11 @@
                     </div>
                     <div class="space-y-2">
                         <Label for="telephone-type">Téléphone</Label>
-                        <Input id="telephone-type" placeholder="Entrée le numéro de téléphone" />
+                        <Input id="telephone-type" placeholder="Entrée le numéro de téléphone" bind:value={clients.numeroPort}/>
                     </div>
                     <div class="space-y-2">
                         <Label for="email">Email</Label>
-                        <Input type="email" id="email" placeholder="email" />
+                        <Input type="email" id="email" placeholder="email" bind:value={clients.adresseElectronique}/>
                     </div>
                     <div class="space-y-2 flex flex-row">
                         <Calendar />
@@ -72,7 +83,7 @@
                                         {/each}
                                     </Select.Group>
                                 </Select.Content>
-                                <Select.Input name="syndique" />
+                                <Select.Input name="syndique" bind:value={clients.syndique} />
                             </Select.Root>
                         </div>
                     </div>
@@ -115,6 +126,6 @@
 
     <div class="flex justify-end space-x-4">
         <Button variant="outline">Annuler</Button>
-        <Button>Enregistrer le client</Button>
+        <Button on:click={generate} >Enregistrer le client</Button>
     </div>
 </div>

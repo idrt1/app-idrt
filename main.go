@@ -2,11 +2,10 @@ package main
 
 import (
 	"embed"
-
-	_ "github.com/mattn/go-sqlite3"
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
+	"myapp/client"
 )
 
 //go:embed all:frontend/build
@@ -15,7 +14,8 @@ var assets embed.FS
 func main() {
 	// Create an instance of the app structure
 	app := NewApp()
-
+	clientManager := &client.ClientMananger{}
+	app.clientManager = clientManager
 	// Create application with options
 	err := wails.Run(&options.App{
 		Title:  "SCD-17",
@@ -29,10 +29,11 @@ func main() {
 		OnShutdown:       app.shutdown,
 		Bind: []interface{}{
 			app,
+			clientManager,
 		},
 	})
 
 	if err != nil {
-		println("Error:", err.Error())
+		panic(err)
 	}
 }
