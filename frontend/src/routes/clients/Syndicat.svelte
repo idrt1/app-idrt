@@ -80,7 +80,7 @@
 
         <div class="space-y-2">
             <Label for="syndicat-coti">Premier an coti</Label>
-            <Input id="syndicat-coti" placeholder="Entré un premier an" />
+            <Input id="syndicat-coti" placeholder="Entré un premier an" bind:value={clients.premierAnCoti} />
         </div>
         <div class="flex items-center space-x-2">
             <Checkbox id="terms-yes" bind:checked aria-labelledby="terms-label-yes" />

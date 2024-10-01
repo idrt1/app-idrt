@@ -1,8 +1,10 @@
-<script>
+<script lang="ts">
     import {Card, CardContent, CardHeader, CardTitle} from "$lib/components/ui/card";
     import {Input} from "$lib/components/ui/input";
     import {Label} from "$lib/components/ui/label";
     import {Checkbox} from "$lib/components/ui/checkbox";
+    import {client} from "$lib/wailsjs/go/models";
+
 
     let checked = false;
     let roles = {
@@ -13,6 +15,9 @@
         laboratoire: false,
         aide: false
     };
+
+    export let clients : client.Client;
+
 </script>
 
 <Card class="border-[#facc14]/50">
@@ -22,15 +27,15 @@
     <CardContent class="space-y-4">
         <div class="space-y-2">
             <Label for="cabinet-lieux">Lieux d'exercice</Label>
-            <Input id="cabinet-lieux" placeholder="Entré un lieu" />
+            <Input id="cabinet-lieux" placeholder="Entré un lieu" bind:value={clients.lieuExercice} />
         </div>
         <div class="space-y-2">
             <Label for="cabinet-type">Type d'exercice</Label>
-            <Input id="cabinet-type" placeholder="Entré un type" />
+            <Input id="cabinet-type" placeholder="Entré un type" bind:value={clients.typeExercice} />
         </div>
         <div class="space-y-2">
             <Label for="cabinet-association">Association</Label>
-            <Input id="cabinet-association" placeholder="Entré une association" />
+            <Input id="cabinet-association" placeholder="Entré une association" bind:value={clients.association} />
         </div>
 
         <div class="flex items-center space-x-2">
