@@ -61,7 +61,7 @@
                 </div>
                 <div class="space-y-2">
                     <Label for="person-tel-portable">Tél portable</Label>
-                    <Input id="person-tel-portable" type="tel" placeholder="Entré le numéro portable" on:input={allowOnlyNumbers} bind:value={clients.numeroTelDomicile} />
+                    <Input id="person-tel-portable" type="tel" placeholder="Entré le numéro portable" on:input={allowOnlyNumbers} />
                 </div>
             </div>
 
@@ -127,7 +127,7 @@
                 </div>
                 <div class="space-y-2">
                     <Label for="person-tel-domicile">Tél domicile</Label>
-                    <Input id="person-tel-domicile" type="tel" placeholder="Entré le numéro domicile" on:input={allowOnlyNumbers} />
+                    <Input id="person-tel-domicile" type="tel" placeholder="Entré le numéro domicile" on:input={allowOnlyNumbers} bind:value={clients.numeroTelDomicile} />
                 </div>
                 <div class="space-y-2">
                     <Label for="person-tel-fax">Tél fax</Label>
