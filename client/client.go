@@ -168,3 +168,69 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
 	}
 	return nil
 }
+
+// get all client
+func (cm *ClientMananger) GetAllClient() ([]Client, error) {
+	rows, err := cm.DB.Query(`SELECT * FROM client`)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var clients []Client
+	for rows.Next() {
+		var client Client
+		err := rows.Scan(
+			&client.Nom,                 // Nom
+			&client.Prenom,              // Prenom
+			&client.AdresseElectronique, // AdresseElectronique
+			&client.NumeroPort,          // NumeroPort
+			&client.Categorie,           // Categorie
+			&client.ConjointSynd,        // ConjointSynd
+			&client.CotiSpeciale,        // CotiSpeciale
+			&client.Cotisation,          // Cotisation
+			&client.Cout,                // Cout
+			&client.D_ou_N,              // D_ou_N
+			//client.DateInstallation, // DateInstallation
+			&client.DateCreation,       // DateCreation
+			&client.DatePaiement,       // DatePaiement
+			&client.IDSyndique,         // IDSyndique
+			&client.NumeroTelProf,      // NumeroTelProf
+			&client.PremierAnCoti,      // PremierAnCoti
+			&client.Syndique,           // Syndique
+			&client.Titre,              // Titre
+			&client.TypeInstallation,   // TypeInstallation
+			&client.CategorieCotiCat,   // CategorieCotiCat
+			&client.CategorieCotiDep,   // CategorieCotiDep
+			&client.AdresseProf1,       // AdresseProf1
+			&client.AdresseProf2,       // AdresseProf2
+			&client.Age,                // Age
+			&client.Association,        // Association
+			&client.CodePostalProf,     // CodePostalProf
+			&client.DateDiplome,        // DateDiplome
+			&client.DateModification,   // DateModification
+			&client.DateNaissance,      // DateNaissance
+			&client.DiplomeFaculte,     // DiplomeFaculte
+			&client.LieuExercice,       // LieuExercice
+			&client.NumeroTelDomicile,  // NumeroTelDomicile
+			&client.PaysProf,           // PaysProf
+			&client.PersAideAssistante, // PersAideAssistante
+			&client.PersAssistante,     // PersAssistante
+			&client.PersCollaborateur,  // PersCollaborateur
+			&client.PersFemmeDeMenage,  // PersFemmeDeMenage
+			&client.PersLaboratoire,    // PersLaboratoire
+			&client.PersReceptionniste, // PersReceptionniste
+			&client.Personnels,         // Personnels
+			&client.Remarques,          // Remarques
+			&client.Responsable,        // Responsable
+			&client.Sexe,               // Sexe
+			&client.TypeExercice,       // TypeExercice
+			&client.VilleProf,          // VilleProf
+		)
+		if err != nil {
+			return nil, err
+		}
+		clients = append(clients, client)
+	}
+	return clients, nil
+}

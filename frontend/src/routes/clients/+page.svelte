@@ -136,10 +136,10 @@
             <Syndicat bind:clients/>
         </TabsContent>
         <TabsContent value="firm" class="mt-4">
-            <Cabinet />
+            <Cabinet bind:clients/>
         </TabsContent>
         <TabsContent value="person" class="mt-4">
-            <Client />
+            <Client bind:clients/>
         </TabsContent>
         <TabsContent value="remark" class="mt-4">
             <Card class="border-[#0da2e7]/50">

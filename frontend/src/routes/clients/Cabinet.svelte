@@ -17,7 +17,6 @@
     };
 
     export let clients : client.Client;
-
 </script>
 
 <Card class="border-[#facc14]/50">
