@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"database/sql"
+	"fmt"
 	_ "modernc.org/sqlite"
 	"myapp/client"
 )
@@ -30,6 +31,14 @@ func (a *App) startup(ctx context.Context) {
 	a.db = db
 
 	a.clientManager.InitTable(a.db)
+
+	clients, err := a.clientManager.GetAllClient()
+	if err != nil {
+		panic(err)
+	}
+	for _, c := range clients {
+		fmt.Println(c)
+	}
 
 	//// Replace with the actual path to the Excel file
 	//filePath := "./data.xlsx"
