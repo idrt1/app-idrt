@@ -88,7 +88,7 @@
                 </div>
                 <div class="space-y-2">
                     <Label for="person-diplome">Diplôme faculté</Label>
-                    <Input id="person-diplome" placeholder="Entré le diplôme" />
+                    <Input id="person-diplome" placeholder="Entré le diplôme" bind:value={clients.diplomeFaculte} />
                 </div>
                 <div class="space-y-2">
                     <Popover.Root>
