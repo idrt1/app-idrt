@@ -18,6 +18,7 @@
     import * as Popover from "$lib/components/ui/popover/index.js";
     import { Button } from "$lib/components/ui/button";
     import {Checkbox} from "$lib/components/ui/checkbox";
+    import {client} from "$lib/wailsjs/go/models";
 
     const df = new DateFormatter("en-US", { dateStyle: "long" });
     let value: DateValue | undefined = undefined;
@@ -26,6 +27,9 @@
         const input = event.target as HTMLInputElement;
         input.value = input.value.replace(/\D/g, '');
     }
+
+    export let clients : client.Client;
+
 </script>
 
 <Card class="border-[#1DAA51]/50">
@@ -37,34 +41,34 @@
             <div class="flex flex-col w-1/2 space-y-4">
                 <div class="space-y-2">
                     <Label for="person-batiment">Bâtiment</Label>
-                    <Input id="person-batiment" placeholder="Entré le bâtiment" />
+                    <Input id="person-batiment" placeholder="Entré le bâtiment" bind:value={clients.adresseProf1} />
                 </div>
                 <div class="space-y-2">
                     <Label for="person-address">Adresse</Label>
-                    <Input id="person-address" placeholder="Entré l'adresse" />
+                    <Input id="person-address" placeholder="Entré l'adresse" bind:value={clients.adresseProf2} />
                 </div>
                 <div class="space-y-2">
                     <Label for="person-postal-code">Code Postal</Label>
-                    <Input id="person-postal-code" placeholder="Entré le code postal" />
+                    <Input id="person-postal-code" placeholder="Entré le code postal" bind:value={clients.codePostalProf} />
                 </div>
                 <div class="space-y-2">
                     <Label for="person-city">Ville</Label>
-                    <Input id="person-city" placeholder="Entré la ville" />
+                    <Input id="person-city" placeholder="Entré la ville" bind:value={clients.villeProf} />
                 </div>
                 <div class="space-y-2">
                     <Label for="person-tel-pro">Tél professionnel</Label>
-                    <Input id="person-tel-pro" type="tel" placeholder="Entré le numéro professionnel" on:input={allowOnlyNumbers} />
+                    <Input id="person-tel-pro" type="tel" placeholder="Entré le numéro professionnel" on:input={allowOnlyNumbers} bind:value={clients.numeroTelProf} />
                 </div>
                 <div class="space-y-2">
                     <Label for="person-tel-portable">Tél portable</Label>
-                    <Input id="person-tel-portable" type="tel" placeholder="Entré le numéro portable" on:input={allowOnlyNumbers} />
+                    <Input id="person-tel-portable" type="tel" placeholder="Entré le numéro portable" on:input={allowOnlyNumbers} bind:value={clients.numeroTelDomicile} />
                 </div>
             </div>
 
             <div class="flex flex-col w-1/2 space-y-4">
                 <div class="space-y-2">
                     <Label for="person-country">Pays</Label>
-                    <Input id="person-country" placeholder="Entré le pays" />
+                    <Input id="person-country" placeholder="Entré le pays" bind:value={clients.paysProf} />
                 </div>
                 <div class="space-y-2">
                     <Popover.Root>
