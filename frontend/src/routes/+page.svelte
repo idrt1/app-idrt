@@ -1,8 +1,7 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { Button } from "$lib/components/ui/button";
-    import { Input } from "$lib/components/ui/input"
-    import { PlusCircle, Search } from "lucide-svelte"
+    import { PlusCircle } from "lucide-svelte"
     import { GetAllClient } from "$lib/wailsjs/go/client/ClientMananger";
     import { client } from "$lib/wailsjs/go/models";
     import DataTable from "./DataTable/DataTable.svelte";
@@ -20,27 +19,20 @@
 
 
 <div class="min-h-screen bg-background flex flex-col items-center justify-center p-4">
-    <main class="max-w-md w-full space-y-6">
+    <main class="max-w-lg w-full space-y-4">
         <h1 class="text-3xl font-bold text-center text-foreground">SCD-17</h1>
         <div class="space-y-4">
             <Button class="w-full" size="lg" href="/clients">
                 <PlusCircle class="mr-2 h-5 w-5" />
                 Ajouter un client
             </Button>
-            <div class="relative">
-                <Input type="search" placeholder="Rechercher un client" class="w-full pl-10 pr-4 py-2"/>
-                <Search class="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-            </div>
             {#if clients.length !== 0}
-                <DataTable clients={clients} />
+                <div class="w-full overflow-x-auto">
+                    <DataTable clients={clients}/>
+                </div>
             {:else}
                 <p class="text-center text-muted-foreground">Aucun client trouvé</p>
             {/if}
-            <ul>
-                {#each clients as client}
-                    <li>{client.nom} {client.prenom} {client.categorie} {client.adresseElectronique}</li>
-                {/each}
-            </ul>
         </div>
     </main>
 </div>

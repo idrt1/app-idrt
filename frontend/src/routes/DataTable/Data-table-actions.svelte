@@ -6,6 +6,7 @@
     export let nom: string;
 </script>
 
+<span>{nom}</span>
 <DropdownMenu.Root>
     <DropdownMenu.Trigger asChild let:builder>
         <Button
@@ -27,6 +28,5 @@
         </DropdownMenu.Group>
         <DropdownMenu.Separator />
         <DropdownMenu.Item>View customer</DropdownMenu.Item>
-        <DropdownMenu.Item>View payment details</DropdownMenu.Item>
     </DropdownMenu.Content>
 </DropdownMenu.Root>
