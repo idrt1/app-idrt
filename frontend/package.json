@@ -33,8 +33,9 @@
 	"dependencies": {
 		"@internationalized/date": "^3.5.5",
 		"@types/postcss-import": "^14.0.3",
-		"bits-ui": "^0.21.15",
+		"bits-ui": "^0.21.16",
 		"clsx": "^2.1.1",
+		"svelte-headless-table": "^0.18.2",
 		"tailwind-merge": "^2.5.2",
 		"tailwind-variants": "^0.2.1"
 	}

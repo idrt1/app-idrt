@@ -5,6 +5,7 @@
     import { PlusCircle, Search } from "lucide-svelte"
     import { GetAllClient } from "$lib/wailsjs/go/client/ClientMananger";
     import { client } from "$lib/wailsjs/go/models";
+    import DataTable from "./DataTable/DataTable.svelte";
 
     let clients: client.Client[] = [];
 
@@ -32,6 +33,7 @@
                 <Input type="search" placeholder="Rechercher un client" class="w-full pl-10 pr-4 py-2"/>
                 <Search class="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
             </div>
+            <DataTable />
             <ul>
                 {#each clients as client}
                     <li>{client.nom} {client.prenom}</li>
