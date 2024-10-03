@@ -3,7 +3,7 @@
     import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
     import { Button } from "$lib/components/ui/button";
 
-    export let id: string;
+    export let nom: string;
 </script>
 
 <DropdownMenu.Root>
@@ -21,8 +21,8 @@
     <DropdownMenu.Content>
         <DropdownMenu.Group>
             <DropdownMenu.Label>Actions</DropdownMenu.Label>
-            <DropdownMenu.Item on:click={() => navigator.clipboard.writeText(id)}>
-                Copy payment ID
+            <DropdownMenu.Item on:click={() => navigator.clipboard.writeText(nom)}>
+                Copy Name
             </DropdownMenu.Item>
         </DropdownMenu.Group>
         <DropdownMenu.Separator />

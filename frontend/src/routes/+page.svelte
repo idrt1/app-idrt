@@ -16,8 +16,6 @@
             console.error(err)
         }
     })
-
-    $: console.log(clients)
 </script>
 
 
@@ -33,10 +31,14 @@
                 <Input type="search" placeholder="Rechercher un client" class="w-full pl-10 pr-4 py-2"/>
                 <Search class="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
             </div>
-            <DataTable />
+            {#if clients.length !== 0}
+                <DataTable clients={clients} />
+            {:else}
+                <p class="text-center text-muted-foreground">Aucun client trouvé</p>
+            {/if}
             <ul>
                 {#each clients as client}
-                    <li>{client.nom} {client.prenom} {client.categorie}</li>
+                    <li>{client.nom} {client.prenom} {client.categorie} {client.adresseElectronique}</li>
                 {/each}
             </ul>
         </div>

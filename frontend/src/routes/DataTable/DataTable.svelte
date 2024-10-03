@@ -22,48 +22,12 @@
     import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
     import { cn } from "$lib/utils.js";
     import { Input } from "$lib/components/ui/input/index.js";
+    import {client} from "$lib/wailsjs/go/models";
 
-    type Payment = {
-        id: string;
-        amount: number;
-        status: "Pending" | "Processing" | "Success" | "Failed";
-        email: string;
-    };
+    export let clients: client.Client[] = [];
 
-    const data: Payment[] = [
-        {
-            id: "m5gr84i9",
-            amount: 316,
-            status: "Success",
-            email: "ken99@yahoo.com"
-        },
-        {
-            id: "3u1reuv4",
-            amount: 242,
-            status: "Success",
-            email: "Abe45@gmail.com"
-        },
-        {
-            id: "derv1ws0",
-            amount: 837,
-            status: "Processing",
-            email: "Monserrat44@gmail.com"
-        },
-        {
-            id: "5kma53ae",
-            amount: 874,
-            status: "Success",
-            email: "Silas22@gmail.com"
-        },
-        {
-            id: "bhqecj4p",
-            amount: 721,
-            status: "Failed",
-            email: "carmella@hotmail.com"
-        }
-    ];
 
-    const table = createTable(readable(data), {
+    const table = createTable(readable(clients), {
         sort: addSortBy({ disableMultiSort: true }),
         page: addPagination(),
         filter: addTableFilter({
@@ -81,7 +45,7 @@
                     checked: allPageRowsSelected
                 });
             },
-            accessor: "id",
+            accessor: "nom",
             cell: ({ row }, { pluginStates }) => {
                 const { getRowState } = pluginStates.select;
                 const { isSelected } = getRowState(row);
@@ -101,12 +65,12 @@
         }),
         table.column({
             header: "Status",
-            accessor: "status",
+            accessor: "categorie",
             plugins: { sort: { disable: true }, filter: { exclude: true } }
         }),
         table.column({
             header: "Email",
-            accessor: "email",
+            accessor: ({ adresseElectronique }) => adresseElectronique,
             cell: ({ value }) => value.toLowerCase(),
             plugins: {
                 filter: {
@@ -117,29 +81,10 @@
             }
         }),
         table.column({
-            header: "Amount",
-            accessor: "amount",
-            cell: ({ value }) => {
-                const formatted = new Intl.NumberFormat("en-US", {
-                    style: "currency",
-                    currency: "USD"
-                }).format(value);
-                return formatted;
-            },
-            plugins: {
-                sort: {
-                    disable: true
-                },
-                filter: {
-                    exclude: true
-                }
-            }
-        }),
-        table.column({
-            header: "",
-            accessor: ({ id }) => id,
+            header: "Nom",
+            accessor: ({ nom }) => nom,
             cell: (item) => {
-                return createRender(Actions, { id: item.value });
+                return createRender(Actions, { nom: item.value });
             },
             plugins: {
                 sort: {
@@ -174,7 +119,7 @@
 
     const { selectedDataIds } = pluginStates.select;
 
-    const hideableCols = ["status", "email", "amount"];
+    const hideableCols = ["categorie", "adresseElectronique", "nom"];
 </script>
 
 <div class="w-full">
