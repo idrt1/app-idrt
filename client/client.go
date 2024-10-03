@@ -170,7 +170,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
 }
 
 func (cm *ClientMananger) GetAllClient() ([]Client, error) {
-	rows, err := cm.DB.Query(`SELECT Nom, Prenom FROM client`)
+	rows, err := cm.DB.Query(`SELECT Nom, Prenom, Categorie FROM client`)
 	if err != nil {
 		return nil, err
 	}
@@ -180,8 +180,9 @@ func (cm *ClientMananger) GetAllClient() ([]Client, error) {
 	for rows.Next() {
 		var client Client
 		err := rows.Scan(
-			&client.Nom,    // Nom
-			&client.Prenom, // Prenom
+			&client.Nom,       // Nom
+			&client.Prenom,    // Prenom
+			&client.Categorie, // Categorie
 		)
 		if err != nil {
 			return nil, err

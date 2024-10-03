@@ -36,7 +36,7 @@
             <DataTable />
             <ul>
                 {#each clients as client}
-                    <li>{client.nom} {client.prenom}</li>
+                    <li>{client.nom} {client.prenom} {client.categorie}</li>
                 {/each}
             </ul>
         </div>
