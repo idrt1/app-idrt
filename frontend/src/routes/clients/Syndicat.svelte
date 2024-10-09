@@ -96,7 +96,11 @@
         </div>
         <div class="space-y-2">
             <Label for="installation">Installation</Label>
-            <Select.Root portal={null}>
+            <Select.Root portal={null} selected={{
+                                value:clients.typeInstallation,
+                                label:installation.find(v=>v.value === clients.typeInstallation)?.label
+                            }}
+                         onSelectedChange={(v) => v && (clients.typeInstallation = v.value)}>
                 <Select.Trigger class="w-full">
                     <Select.Value placeholder="Type d'installation" />
                 </Select.Trigger>
@@ -115,7 +119,11 @@
         </div>
         <div class="space-y-2">
             <Label for="installation">Categorie</Label>
-            <Select.Root portal={null}>
+            <Select.Root portal={null} selected={{
+                                value:clients.categorie,
+                                label:categorie.find(v=>v.value === clients.categorie)?.label
+                            }}
+                         onSelectedChange={(v) => v && (clients.categorie = v.value)}>
                 <Select.Trigger class="w-full">
                     <Select.Value placeholder="Categorie" />
                 </Select.Trigger>

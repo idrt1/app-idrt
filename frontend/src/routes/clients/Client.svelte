@@ -112,7 +112,11 @@
                 </div>
                 <div class="space-y-2">
                     <Label for="sexe">Sexe</Label>
-                    <Select.Root portal={null}>
+                    <Select.Root portal={null} selected={{
+                                value:clients.sexe,
+                                label:sexe.find(v=>v.value === clients.sexe)?.label
+                            }}
+                                 onSelectedChange={(v) => v && (clients.sexe = v.value)}>
                         <Select.Trigger class="w-full">
                             <Select.Value placeholder="Sexe" />
                         </Select.Trigger>
