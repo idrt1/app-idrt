@@ -13,8 +13,9 @@
     import {client} from "$lib/wailsjs/go/models";
 
     const df = new DateFormatter("en-US", { dateStyle: "long" });
-    let startDate: DateValue | undefined = undefined;
-    let endDate: DateValue | undefined = undefined;
+
+    let dateCreationValue: DateValue | undefined = undefined;
+    let dateInstallationValue: DateValue | undefined = undefined;
 
     let checked: boolean = false;
 
@@ -41,7 +42,8 @@
         { value : "P351/2", label: "E" },
     ];
 
-
+    $:clients.dateCreation = dateCreationValue ? dateCreationValue.toDate(getLocalTimeZone()).toString() : "";
+    $:clients.dateInstallation = dateInstallationValue ? dateInstallationValue.toDate(getLocalTimeZone()).toString() : "";
 </script>
 
 <Card class="border-[#EF4343]/50">
@@ -53,13 +55,13 @@
             <Label for="start-date">Date de création</Label>
             <Popover.Root>
                 <Popover.Trigger asChild let:builder>
-                    <Button variant="outline" class={cn("h-[42px] w-full justify-start text-left font-normal", !startDate && "text-muted-foreground")} builders={[builder]}>
+                    <Button variant="outline" class={cn("h-[42px] w-full justify-start text-left font-normal", !dateCreationValue && "text-muted-foreground")} builders={[builder]}>
                         <CalendarIcon class="mr-2 h-4 w-4" />
-                        {startDate ? df.format(startDate.toDate(getLocalTimeZone())) : "Choisir une date de création"}
+                        {dateCreationValue ? df.format(dateCreationValue.toDate(getLocalTimeZone())) : "Choisir une date de création"}
                     </Button>
                 </Popover.Trigger>
                 <Popover.Content class="w-auto p-0">
-                    <Calendar bind:value={startDate} initialFocus />
+                    <Calendar bind:value={dateCreationValue} initialFocus />
                 </Popover.Content>
             </Popover.Root>
         </div>
@@ -67,13 +69,13 @@
             <Label for="end-date">Date d'installation</Label>
             <Popover.Root>
                 <Popover.Trigger asChild let:builder>
-                    <Button variant="outline" class={cn("h-[42px] w-full justify-start text-left font-normal", !endDate && "text-muted-foreground")} builders={[builder]}>
+                    <Button variant="outline" class={cn("h-[42px] w-full justify-start text-left font-normal", !dateInstallationValue && "text-muted-foreground")} builders={[builder]}>
                         <CalendarIcon class="mr-2 h-4 w-4" />
-                        {endDate ? df.format(endDate.toDate(getLocalTimeZone())) : "Choisir une date d'installation"}
+                        {dateInstallationValue ? df.format(dateInstallationValue.toDate(getLocalTimeZone())) : "Choisir une date d'installation"}
                     </Button>
                 </Popover.Trigger>
                 <Popover.Content class="w-auto p-0">
-                    <Calendar bind:value={endDate} initialFocus />
+                    <Calendar bind:value={dateInstallationValue} initialFocus />
                 </Popover.Content>
             </Popover.Root>
         </div>

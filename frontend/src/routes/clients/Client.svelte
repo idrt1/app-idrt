@@ -21,7 +21,8 @@
     import {client} from "$lib/wailsjs/go/models";
 
     const df = new DateFormatter("en-US", { dateStyle: "long" });
-    let value: DateValue | undefined = undefined;
+    let dateDiplomeValue: DateValue | undefined = undefined;
+    let datePaiementValue: DateValue | undefined = undefined;
 
     function allowOnlyNumbers(event: InputEvent) {
         const input = event.target as HTMLInputElement;
@@ -29,6 +30,9 @@
     }
 
     export let clients : client.Client;
+
+    $:clients.dateDiplome = dateDiplomeValue ? dateDiplomeValue.toDate(getLocalTimeZone()).toString() : "";
+    $:clients.datePaiement = datePaiementValue ? datePaiementValue.toDate(getLocalTimeZone()).toString() : "";
 
 </script>
 
@@ -75,14 +79,14 @@
                         <div class="flex flex-col space-y-2">
                             <Label for="date">Date de paiement</Label>
                             <Popover.Trigger asChild let:builder>
-                                <Button variant="outline" class={cn("h-[42px] w-full justify-start text-left font-normal", !value && "text-muted-foreground")} builders={[builder]}>
+                                <Button variant="outline" class={cn("h-[42px] w-full justify-start text-left font-normal", !datePaiementValue && "text-muted-foreground")} builders={[builder]}>
                                     <CalendarIcon class="mr-2 h-4 w-4" />
-                                    {value ? df.format(value.toDate(getLocalTimeZone())) : "Choisir une date"}
+                                    {datePaiementValue ? df.format(datePaiementValue.toDate(getLocalTimeZone())) : "Choisir une date"}
                                 </Button>
                             </Popover.Trigger>
                         </div>
                         <Popover.Content class="w-auto p-0">
-                            <Calendar bind:value initialFocus />
+                            <Calendar bind:value={datePaiementValue} initialFocus />
                         </Popover.Content>
                     </Popover.Root>
                 </div>
@@ -95,14 +99,14 @@
                         <div class="flex flex-col space-y-2">
                             <Label for="date">Date du diplôme</Label>
                             <Popover.Trigger asChild let:builder>
-                                <Button variant="outline" class={cn("h-[42px] w-full justify-start text-left font-normal", !value && "text-muted-foreground")} builders={[builder]}>
+                                <Button variant="outline" class={cn("h-[42px] w-full justify-start text-left font-normal", !dateDiplomeValue && "text-muted-foreground")} builders={[builder]}>
                                     <CalendarIcon class="mr-2 h-4 w-4" />
-                                    {value ? df.format(value.toDate(getLocalTimeZone())) : "Choisir une date"}
+                                    {dateDiplomeValue ? df.format(dateDiplomeValue.toDate(getLocalTimeZone())) : "Choisir une date"}
                                 </Button>
                             </Popover.Trigger>
                         </div>
                         <Popover.Content class="w-auto p-0">
-                            <Calendar bind:value initialFocus />
+                            <Calendar bind:value={dateDiplomeValue} initialFocus />
                         </Popover.Content>
                     </Popover.Root>
                 </div>
