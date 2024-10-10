@@ -45,7 +45,9 @@
 
     $:clients.dateCreation = dateCreationValue ? dateCreationValue.toDate(getLocalTimeZone()).toString() : "";
     $:clients.dateInstallation = dateInstallationValue ? dateInstallationValue.toDate(getLocalTimeZone()).toString() : "";
-</script>
+
+    $: clients.d_ou_N = checkedYes ? "O" : checkedNo ? "N" : "";
+    $: console.log("clients.d_ou_N:", clients.d_ou_N);</script>
 
 <Card class="border-[#EF4343]/50">
     <CardHeader>
@@ -85,15 +87,19 @@
             <Label for="syndicat-coti">Premier an coti</Label>
             <Input id="syndicat-coti" placeholder="Entré un premier an" bind:value={clients.premierAnCoti} />
         </div>
-        <div class="flex items-center space-x-2">
-            <Checkbox id="terms-yes" bind:checked={checkedYes} aria-labelledby="terms-label-yes" bind:value={clients.d_ou_N} />
-            <Label id="terms-label-yes" for="terms-yes" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                O
-            </Label>
-            <Checkbox id="terms-no" bind:checked={checkedNo} aria-labelledby="terms-label-no" bind:value={clients.d_ou_N} />
-            <Label id="terms-label-no" for="terms-no" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                N
-            </Label>
+
+        <div id="conjoint-syndic" class="flex flex-col space-x-2 space-y-2">
+            <Label for="syndicat-coti">Conjoint syndic</Label>
+            <div class="flex items-center space-x-2">
+                <Checkbox id="terms-yes" bind:checked={checkedYes} aria-labelledby="terms-label-yes" />
+                <Label id="terms-label-yes" for="terms-yes" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                    O
+                </Label>
+                <Checkbox id="terms-no" bind:checked={checkedNo} aria-labelledby="terms-label-no" />
+                <Label id="terms-label-no" for="terms-no" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                    N
+                </Label>
+            </div>
         </div>
         <div class="space-y-2">
             <Label for="installation">Installation</Label>
