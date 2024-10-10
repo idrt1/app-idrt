@@ -17,7 +17,8 @@
     let dateCreationValue: DateValue | undefined = undefined;
     let dateInstallationValue: DateValue | undefined = undefined;
 
-    let checked: boolean = false;
+    let checkedYes: boolean = false;
+    let checkedNo: boolean = false;
 
     export let clients : client.Client;
 
@@ -85,11 +86,11 @@
             <Input id="syndicat-coti" placeholder="Entré un premier an" bind:value={clients.premierAnCoti} />
         </div>
         <div class="flex items-center space-x-2">
-            <Checkbox id="terms-yes" bind:checked aria-labelledby="terms-label-yes" />
+            <Checkbox id="terms-yes" bind:checked={checkedYes} aria-labelledby="terms-label-yes" bind:value={clients.d_ou_N} />
             <Label id="terms-label-yes" for="terms-yes" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                 O
             </Label>
-            <Checkbox id="terms-no" bind:checked aria-labelledby="terms-label-no" />
+            <Checkbox id="terms-no" bind:checked={checkedNo} aria-labelledby="terms-label-no" bind:value={clients.d_ou_N} />
             <Label id="terms-label-no" for="terms-no" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                 N
             </Label>
