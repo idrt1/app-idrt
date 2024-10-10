@@ -46,8 +46,8 @@
     $:clients.dateCreation = dateCreationValue ? dateCreationValue.toDate(getLocalTimeZone()).toString() : "";
     $:clients.dateInstallation = dateInstallationValue ? dateInstallationValue.toDate(getLocalTimeZone()).toString() : "";
 
-    $: clients.d_ou_N = checkedYes ? "O" : checkedNo ? "N" : "";
-    $: console.log("clients.d_ou_N:", clients.d_ou_N);</script>
+    $: clients.conjointSynd = checkedYes ? "O" : checkedNo ? "N" : "";
+</script>
 
 <Card class="border-[#EF4343]/50">
     <CardHeader>

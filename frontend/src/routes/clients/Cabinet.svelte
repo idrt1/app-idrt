@@ -6,7 +6,9 @@
     import {client} from "$lib/wailsjs/go/models";
 
 
-    let checked = false;
+    let checkedYes: boolean = false;
+    let checkedNo: boolean = false;
+
     let roles = {
         femmeDeMenage: false,
         receptioniste: false,
@@ -15,6 +17,8 @@
         laboratoire: false,
         aide: false
     };
+
+    $: clients.d_ou_N = checkedYes ? "O" : checkedNo ? "N" : "";
 
     export let clients : client.Client;
 </script>
@@ -37,15 +41,18 @@
             <Input id="cabinet-association" placeholder="Entré une association" bind:value={clients.association} />
         </div>
 
-        <div class="flex items-center space-x-2">
-            <Checkbox id="terms-yes" bind:checked aria-labelledby="terms-label-yes" />
-            <Label id="terms-label-yes" for="terms-yes" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                O
-            </Label>
-            <Checkbox id="terms-no" bind:checked aria-labelledby="terms-label-no" />
-            <Label id="terms-label-no" for="terms-no" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                N
-            </Label>
+        <div id="conjoint-syndic" class="flex flex-col space-x-2 space-y-2">
+            <Label for="Personels">Personels</Label>
+            <div class="flex items-center space-x-2">
+                <Checkbox id="terms-yes" bind:checked={checkedYes} aria-labelledby="terms-label-yes" />
+                <Label id="terms-label-yes" for="terms-yes" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                    O
+                </Label>
+                <Checkbox id="terms-no" bind:checked={checkedNo} aria-labelledby="terms-label-no" />
+                <Label id="terms-label-no" for="terms-no" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                    N
+                </Label>
+            </div>
         </div>
 
         <div class="space-y-2">

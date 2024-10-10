@@ -31,7 +31,8 @@
 
     const syndique = [
         { value: "N", label: "N" },
-        { value: "D", label: "D" }
+        { value: "D", label: "D" },
+        {value: "S", label: "S"}
     ];
     let clients = new client.Client();
 
