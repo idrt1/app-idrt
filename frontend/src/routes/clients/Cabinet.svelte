@@ -1,14 +1,12 @@
 <script lang="ts">
-    import {Card, CardContent, CardHeader, CardTitle} from "$lib/components/ui/card";
-    import {Input} from "$lib/components/ui/input";
-    import {Label} from "$lib/components/ui/label";
-    import {Checkbox} from "$lib/components/ui/checkbox";
-    import {client} from "$lib/wailsjs/go/models";
+    import { Card, CardContent, CardHeader, CardTitle } from "$lib/components/ui/card";
+    import { Input } from "$lib/components/ui/input";
+    import { Label } from "$lib/components/ui/label";
+    import { Checkbox } from "$lib/components/ui/checkbox";
+    import { client } from "$lib/wailsjs/go/models";
 
-
-    let checkedYes: boolean = false;
-    let checkedNo: boolean = false;
-
+    let checkedYes = false;
+    let checkedNo = false;
     let roles = {
         femmeDeMenage: false,
         receptioniste: false,
@@ -20,25 +18,39 @@
 
     $: clients.d_ou_N = checkedYes ? "O" : checkedNo ? "N" : "";
 
+    function convertRolesToNumbers() {
+        clients.persAideAssistante = roles.aide ? "1" : "0";
+        clients.persCollaborateur = roles.collaborateur ? "1" : "0";
+        clients.persAssistante = roles.assistante ? "1" : "0";
+        clients.persReceptionniste = roles.receptioniste ? "1" : "0";
+        clients.persFemmeDeMenage = roles.femmeDeMenage ? "1" : "0";
+        clients.persLaboratoire = roles.laboratoire ? "1" : "0";
+    }
+
+    $: convertRolesToNumbers();
+
+    $: console.log(clients.persLaboratoire);
+
     export let clients : client.Client;
+
 </script>
 
-<Card class="border-[#facc14]/50">
+<Card>
     <CardHeader>
         <CardTitle>Information du cabinet</CardTitle>
     </CardHeader>
-    <CardContent class="space-y-4">
-        <div class="space-y-2">
-            <Label for="cabinet-lieux">Lieux d'exercice</Label>
-            <Input id="cabinet-lieux" placeholder="Entré un lieu" bind:value={clients.lieuExercice} />
+    <CardContent>
+        <div>
+            <Label>Lieux d'exercice</Label>
+            <Input />
         </div>
-        <div class="space-y-2">
-            <Label for="cabinet-type">Type d'exercice</Label>
-            <Input id="cabinet-type" placeholder="Entré un type" bind:value={clients.typeExercice} />
+        <div>
+            <Label>Type d'exercice</Label>
+            <Input />
         </div>
-        <div class="space-y-2">
-            <Label for="cabinet-association">Association</Label>
-            <Input id="cabinet-association" placeholder="Entré une association" bind:value={clients.association} />
+        <div>
+            <Label>Association</Label>
+            <Input />
         </div>
 
         <div id="conjoint-syndic" class="flex flex-col space-x-2 space-y-2">
