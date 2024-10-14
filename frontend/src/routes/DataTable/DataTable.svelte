@@ -64,9 +64,19 @@
             }
         }),
         table.column({
-            header: "Status",
-            accessor: "categorie",
-            plugins: { sort: { disable: true }, filter: { exclude: true } }
+            header: "Prénom",
+            accessor: ({ prenom }) => prenom,
+            cell: ({ value }) => value.toLowerCase(),
+            plugins: {
+                sort: {
+                    disable: false
+                },
+                filter: {
+                    getFilterValue(value) {
+                        return value.toLowerCase();
+                    }
+                }
+            }
         }),
         table.column({
             header: "Email",
@@ -74,7 +84,7 @@
             cell: ({ value }) => value.toLowerCase(),
             plugins: {
                 sort: {
-                    disable: false // Activation du tri
+                    disable: false
                 },
                 filter: {
                     getFilterValue(value) {
@@ -85,7 +95,7 @@
         }),
         table.column({
             header: "Nom",
-            accessor: ({ nom }) => nom,
+            accessor: ({ nom }) => nom, // Utilise la colonne actions après l'email
             cell: (item) => {
                 return createRender(Actions, { nom: item.value });
             },
@@ -96,6 +106,7 @@
             }
         })
     ]);
+
 
     const {
         headerRows,
@@ -156,7 +167,7 @@
                                             <div class="text-right font-medium">
                                                 <Render of={cell.render()} />
                                             </div>
-                                        {:else if cell.id === "Email"}
+                                        {:else if cell.id === "Prenom"}
                                             <Button variant="ghost" on:click={props.sort.toggle}>
                                                 <Render of={cell.render()} />
                                                 <ArrowUpDown class={cn($sortKeys[0]?.id === cell.id && "text-foreground","ml-2 h-4 w-4")}/>
