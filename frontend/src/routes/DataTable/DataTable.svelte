@@ -146,7 +146,7 @@
                                 <Subscribe attrs={cell.attrs()} let:attrs props={cell.props()} let:props>
                                     <Table.Head {...attrs} class={cn("[&:has([role=checkbox])]:pl-3")}>
                                         {#if cell.id === "Nom"}
-                                            <div class="text-right font-medium">
+                                            <div class="font-medium">
                                                 <Render of={cell.render()} />
                                             </div>
                                         {:else if cell.id === "Prenom"}
