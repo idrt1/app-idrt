@@ -135,7 +135,7 @@
 </script>
 
 <div class="w-full pt-4 pl-8">
-    <Input class="max-w-sm" placeholder="Filtrer par mails..." type="text" bind:value={$filterValue}/>
+    <Input class="max-w-sm" placeholder="Rechercher..." type="text" bind:value={$filterValue}/>
     <div class="rounded-md border mt-4">
         <Table.Root {...$tableAttrs}>
             <Table.Header>

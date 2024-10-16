@@ -28,9 +28,6 @@
     }
 
     $: convertRolesToNumbers();
-
-    $: console.log(clients.persLaboratoire);
-
     export let clients : client.Client;
 
 </script>

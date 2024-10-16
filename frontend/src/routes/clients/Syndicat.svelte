@@ -43,8 +43,13 @@
         { value : "P351/2", label: "E" },
     ];
 
-    $:clients.dateCreation = dateCreationValue ? dateCreationValue.toDate(getLocalTimeZone()).toString() : "";
-    $:clients.dateInstallation = dateInstallationValue ? dateInstallationValue.toDate(getLocalTimeZone()).toString() : "";
+    function formatDate(date: Date): string {
+        const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
+        return date.toLocaleDateString('fr-FR', options);
+    }
+
+    $:clients.dateCreation = dateCreationValue ? formatDate(dateCreationValue.toDate(getLocalTimeZone())) : "";
+    $:clients.dateInstallation = dateInstallationValue ? formatDate(dateInstallationValue.toDate(getLocalTimeZone())) : "";
 
     $: clients.conjointSynd = checkedYes ? "O" : checkedNo ? "N" : "";
 </script>

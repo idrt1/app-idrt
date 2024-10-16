@@ -1,40 +1,39 @@
 <script lang="ts">
     import { Button } from "$lib/components/ui/button";
-    import { Card, CardContent, CardHeader, CardTitle } from "$lib/components/ui/card"
-    import { Input } from "$lib/components/ui/input"
-    import { Label } from "$lib/components/ui/label"
-    import { Tabs, TabsContent, TabsList, TabsTrigger } from "$lib/components/ui/tabs"
-    import { Textarea } from "$lib/components/ui/textarea"
+    import { Card, CardContent, CardHeader, CardTitle } from "$lib/components/ui/card";
+    import { Input } from "$lib/components/ui/input";
+    import { Label } from "$lib/components/ui/label";
+    import { Tabs, TabsContent, TabsList, TabsTrigger } from "$lib/components/ui/tabs";
+    import { Textarea } from "$lib/components/ui/textarea";
     import Client from "./Client.svelte";
     import Cabinet from "./Cabinet.svelte";
     import Syndicat from "./Syndicat.svelte";
     import * as Select from "$lib/components/ui/select";
-
     import { InsertClient } from "$lib/wailsjs/go/client/ClientMananger";
     import { client } from "$lib/wailsjs/go/models";
-
     import CalendarIcon from "lucide-svelte/icons/calendar";
-    import {
-        DateFormatter,
-        type DateValue,
-        getLocalTimeZone
-    } from "@internationalized/date";
+    import { DateFormatter, type DateValue, getLocalTimeZone } from "@internationalized/date";
     import { cn } from "$lib/utils.js";
     import { Calendar } from "$lib/components/ui/calendar/index.js";
     import * as Popover from "$lib/components/ui/popover/index.js";
 
+    let datePaiementValue: DateValue | undefined = undefined;
+    let clients = new client.Client();
+
     const df = new DateFormatter("en-US", {
         dateStyle: "long"
     });
-
-    let datePaiementValue: DateValue | undefined = undefined;
 
     const syndique = [
         { value: "N", label: "N" },
         { value: "D", label: "D" },
         {value: "S", label: "S"}
     ];
-    let clients = new client.Client();
+
+    function formatDate(date: Date): string {
+        const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
+        return date.toLocaleDateString('fr-FR', options);
+    }
 
     function generate() {
         InsertClient(clients).then((result) => {
@@ -42,8 +41,9 @@
         });
     }
 
-    $:clients.datePaiement = datePaiementValue ? datePaiementValue.toDate(getLocalTimeZone()).toString() : "";
+    $: clients.datePaiement = datePaiementValue ? formatDate(datePaiementValue.toDate(getLocalTimeZone())) : "";
 </script>
+
 
 <div class="container mx-auto p-4 space-y-6">
     <div class="flex flex-row justify-between">

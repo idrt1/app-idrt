@@ -28,12 +28,15 @@
         const input = event.target as HTMLInputElement;
         input.value = input.value.replace(/\D/g, '');
     }
+    function formatDate(date: Date): string {
+        const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
+        return date.toLocaleDateString('fr-FR', options);
+    }
 
     export let clients : client.Client;
 
-    $:clients.dateDiplome = dateDiplomeValue ? dateDiplomeValue.toDate(getLocalTimeZone()).toString() : "";
-    $:clients.datePaiement = datePaiementValue ? datePaiementValue.toDate(getLocalTimeZone()).toString() : "";
-
+    $:clients.dateDiplome = dateDiplomeValue ? formatDate( dateDiplomeValue.toDate(getLocalTimeZone())) : "";
+    $:clients.datePaiement = datePaiementValue ? formatDate(datePaiementValue.toDate(getLocalTimeZone())) : "";
 </script>
 
 <Card class="border-[#1DAA51]/50">
