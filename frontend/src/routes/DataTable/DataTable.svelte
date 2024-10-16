@@ -21,6 +21,7 @@
     import { cn } from "$lib/utils.js";
     import { Input } from "$lib/components/ui/input/index.js";
     import {client} from "$lib/wailsjs/go/models";
+    import {goto} from "$app/navigation";
 
     export let clients: client.Client[] = [];
 
@@ -43,7 +44,7 @@
                     checked: allPageRowsSelected
                 });
             },
-            accessor: "nom",
+            accessor: "id",
             cell: ({ row }, { pluginStates }) => {
                 const { getRowState } = pluginStates.select;
                 const { isSelected } = getRowState(row);
@@ -118,19 +119,15 @@
 
     const { sortKeys } = pluginStates.sort;
 
-
-    const { hiddenColumnIds } = pluginStates.hide;
-    const ids = flatColumns.map((c) => c.id);
-    let hideForId = Object.fromEntries(ids.map((id) => [id, true]));
-
-    $: $hiddenColumnIds = Object.entries(hideForId)
-        .filter(([, hide]) => !hide)
-        .map(([id]) => id);
-
     const { hasNextPage, hasPreviousPage, pageIndex } = pluginStates.page;
     const { filterValue } = pluginStates.filter;
 
     const { selectedDataIds } = pluginStates.select;
+
+    function handleRowClick(clientId: number) {
+        goto(`/clients?id=${clientId}`);
+        console.log(clientId);
+    }
 
 </script>
 
@@ -167,7 +164,7 @@
             <Table.Body {...$tableBodyAttrs}>
                 {#each $pageRows as row (row.id)}
                     <Subscribe rowAttrs={row.attrs()} let:rowAttrs>
-                        <Table.Row {...rowAttrs} data-state={$selectedDataIds[row.id] && "selected"}>
+                        <Table.Row {...rowAttrs} data-id={row.id} data-state={$selectedDataIds[row.id] && "selected"} on:click={() => handleRowClick(row.original.id)}>
                             {#each row.cells as cell (cell.id)}
                                 <Subscribe attrs={cell.attrs()} let:attrs>
                                     <Table.Cell class="[&:has([role=checkbox])]:pl-3" {...attrs}>
@@ -189,6 +186,7 @@
                     </Subscribe>
                 {/each}
             </Table.Body>
+
         </Table.Root>
     </div>
     <div class="flex items-center justify-end space-x-2 py-4">

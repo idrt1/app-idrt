@@ -9,6 +9,7 @@ type ClientMananger struct {
 }
 
 type Client struct {
+	ID                  int    `json:"id"`
 	Nom                 string `json:"nom"`
 	Prenom              string `json:"prenom"`
 	AdresseElectronique string `json:"adresseElectronique"`
@@ -170,7 +171,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
 }
 
 func (cm *ClientMananger) GetAllClient() ([]Client, error) {
-	rows, err := cm.DB.Query(`SELECT Nom, Prenom, Categorie, AdresseElectronique FROM client`)
+	rows, err := cm.DB.Query(`SELECT id, Nom, Prenom, Categorie, AdresseElectronique FROM client`)
 	if err != nil {
 		return nil, err
 	}
@@ -180,6 +181,7 @@ func (cm *ClientMananger) GetAllClient() ([]Client, error) {
 	for rows.Next() {
 		var client Client
 		err := rows.Scan(
+			&client.ID,                  // id
 			&client.Nom,                 // Nom
 			&client.Prenom,              // Prenom
 			&client.Categorie,           // Categorie
@@ -191,4 +193,62 @@ func (cm *ClientMananger) GetAllClient() ([]Client, error) {
 		clients = append(clients, client)
 	}
 	return clients, nil
+}
+
+func (cm *ClientMananger) GetClientByID(id int) (Client, error) {
+	row := cm.DB.QueryRow(`SELECT id, Nom, Prenom, AdresseElectronique, NumeroPort, Categorie, ConjointSynd, CotiSpeciale, Cotisation, Cout, D_ou_N, DateCreation, DatePaiement, IDSyndique, NumeroTelProf, PremierAnCoti, Syndique, Titre, TypeInstallation, CategorieCotiCat, CategorieCotiDep, AdresseProf1, AdresseProf2, Age, Association, CodePostalProf, DateDiplome, DateModification, DateNaissance, DiplomeFaculte, LieuExercice, NumeroTelDomicile, PaysProf, PersAideAssistante, PersAssistante, PersCollaborateur, PersFemmeDeMenage, PersLaboratoire, PersReceptionniste, Personnels, Remarques, Responsable, Sexe, TypeExercice, VilleProf FROM client WHERE id = ?`, id)
+
+	var client Client
+	err := row.Scan(
+		&client.ID,                  // id
+		&client.Nom,                 // Nom
+		&client.Prenom,              // Prenom
+		&client.AdresseElectronique, // AdresseElectronique
+		&client.NumeroPort,          // NumeroPort
+		&client.Categorie,           // Categorie
+		&client.ConjointSynd,        // ConjointSynd
+		&client.CotiSpeciale,        // CotiSpeciale
+		&client.Cotisation,          // Cotisation
+		&client.Cout,                // Cout
+		&client.D_ou_N,              // D_ou_N
+		//&client.DateInstallation,    // DateInstallation
+		&client.DateCreation,       // DateCreation
+		&client.DatePaiement,       // DatePaiement
+		&client.IDSyndique,         // IDSyndique
+		&client.NumeroTelProf,      // NumeroTelProf
+		&client.PremierAnCoti,      // PremierAnCoti
+		&client.Syndique,           // Syndique
+		&client.Titre,              // Titre
+		&client.TypeInstallation,   // TypeInstallation
+		&client.CategorieCotiCat,   // CategorieCotiCat
+		&client.CategorieCotiDep,   // CategorieCotiDep
+		&client.AdresseProf1,       // AdresseProf1
+		&client.AdresseProf2,       // AdresseProf2
+		&client.Age,                // Age
+		&client.Association,        // Association
+		&client.CodePostalProf,     // CodePostalProf
+		&client.DateDiplome,        // DateDiplome
+		&client.DateModification,   // DateModification
+		&client.DateNaissance,      // DateNaissance
+		&client.DiplomeFaculte,     // DiplomeFaculte
+		&client.LieuExercice,       // LieuExercice
+		&client.NumeroTelDomicile,  // NumeroTelDomicile
+		&client.PaysProf,           // PaysProf
+		&client.PersAideAssistante, // PersAideAssistante
+		&client.PersAssistante,     // PersAssistante
+		&client.PersCollaborateur,  // PersCollaborateur
+		&client.PersFemmeDeMenage,  // PersFemmeDeMenage
+		&client.PersLaboratoire,    // PersLaboratoire
+		&client.PersReceptionniste, // PersReceptionniste
+		&client.Personnels,         // Personnels
+		&client.Remarques,          // Remarques
+		&client.Responsable,        // Responsable
+		&client.Sexe,               // Sexe
+		&client.TypeExercice,       // TypeExercice
+		&client.VilleProf,          // VilleProf
+	)
+	if err != nil {
+		return Client{}, err
+	}
+	return client, nil
 }

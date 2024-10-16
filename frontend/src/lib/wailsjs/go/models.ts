@@ -1,6 +1,7 @@
 export namespace client {
 	
 	export class Client {
+	    id: number;
 	    nom: string;
 	    prenom: string;
 	    adresseElectronique: string;
@@ -53,6 +54,7 @@ export namespace client {
 	
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.id = source["id"];
 	        this.nom = source["nom"];
 	        this.prenom = source["prenom"];
 	        this.adresseElectronique = source["adresseElectronique"];

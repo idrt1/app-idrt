@@ -39,15 +39,15 @@
     <CardContent>
         <div>
             <Label>Lieux d'exercice</Label>
-            <Input />
+            <Input bind:value={clients.lieuExercice} />
         </div>
         <div>
             <Label>Type d'exercice</Label>
-            <Input />
+            <Input bind:value={clients.typeExercice} />
         </div>
         <div>
             <Label>Association</Label>
-            <Input />
+            <Input bind:value={clients.association} />
         </div>
 
         <div id="conjoint-syndic" class="flex flex-col space-x-2 space-y-2">

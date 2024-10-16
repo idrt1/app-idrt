@@ -6,6 +6,10 @@ export function GetAllClient() {
   return window['go']['client']['ClientMananger']['GetAllClient']();
 }
 
+export function GetClientByID(arg1) {
+  return window['go']['client']['ClientMananger']['GetClientByID'](arg1);
+}
+
 export function InitTable(arg1) {
   return window['go']['client']['ClientMananger']['InitTable'](arg1);
 }

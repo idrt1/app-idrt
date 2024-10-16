@@ -1,150 +1,167 @@
 <script lang="ts">
+    import { Button } from "$lib/components/ui/button";
     import { Card, CardContent, CardHeader, CardTitle } from "$lib/components/ui/card";
-    import { Label } from "$lib/components/ui/label";
     import { Input } from "$lib/components/ui/input";
+    import { Label } from "$lib/components/ui/label";
+    import { Tabs, TabsContent, TabsList, TabsTrigger } from "$lib/components/ui/tabs";
+    import { Textarea } from "$lib/components/ui/textarea";
+    import Client from "./Personne.svelte";
+    import Cabinet from "./Cabinet.svelte";
+    import Syndicat from "./Syndicat.svelte";
     import * as Select from "$lib/components/ui/select";
-    const sexe = [
-        { value: "M", label: "M" },
-        { value: "F", label: "F" }
-    ];
+    import { InsertClient } from "$lib/wailsjs/go/client/ClientMananger";
+    import { client } from "$lib/wailsjs/go/models";
     import CalendarIcon from "lucide-svelte/icons/calendar";
-    import {
-        DateFormatter,
-        type DateValue,
-        getLocalTimeZone
-    } from "@internationalized/date";
+    import { DateFormatter, type DateValue, getLocalTimeZone } from "@internationalized/date";
     import { cn } from "$lib/utils.js";
     import { Calendar } from "$lib/components/ui/calendar/index.js";
     import * as Popover from "$lib/components/ui/popover/index.js";
-    import { Button } from "$lib/components/ui/button";
-    import {Checkbox} from "$lib/components/ui/checkbox";
-    import {client} from "$lib/wailsjs/go/models";
 
-    const df = new DateFormatter("en-US", { dateStyle: "long" });
-    let dateDiplomeValue: DateValue | undefined = undefined;
+    export let clients = new client.Client();
+
     let datePaiementValue: DateValue | undefined = undefined;
 
-    function allowOnlyNumbers(event: InputEvent) {
-        const input = event.target as HTMLInputElement;
-        input.value = input.value.replace(/\D/g, '');
-    }
+    const df = new DateFormatter("en-US", {
+        dateStyle: "long"
+    });
+
+    const syndique = [
+        { value: "N", label: "N" },
+        { value: "D", label: "D" },
+        {value: "S", label: "S"}
+    ];
+
     function formatDate(date: Date): string {
         const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
         return date.toLocaleDateString('fr-FR', options);
     }
 
-    export let clients : client.Client;
+    function generate() {
+        InsertClient(clients).then((result) => {
+            console.log(result);
+        });
+    }
 
-    $:clients.dateDiplome = dateDiplomeValue ? formatDate( dateDiplomeValue.toDate(getLocalTimeZone())) : "";
-    $:clients.datePaiement = datePaiementValue ? formatDate(datePaiementValue.toDate(getLocalTimeZone())) : "";
+    $: clients.datePaiement = datePaiementValue ? formatDate(datePaiementValue.toDate(getLocalTimeZone())) : "";
 </script>
 
-<Card class="border-[#1DAA51]/50">
-    <CardHeader>
-        <CardTitle>Information du client</CardTitle>
-    </CardHeader>
-    <CardContent class="space-y-4">
-        <div class="flex flex-row space-x-4">
-            <div class="flex flex-col w-1/2 space-y-4">
-                <div class="space-y-2">
-                    <Label for="person-batiment">Bâtiment</Label>
-                    <Input id="person-batiment" placeholder="Entré le bâtiment" bind:value={clients.adresseProf1} />
-                </div>
-                <div class="space-y-2">
-                    <Label for="person-address">Adresse</Label>
-                    <Input id="person-address" placeholder="Entré l'adresse" bind:value={clients.adresseProf2} />
-                </div>
-                <div class="space-y-2">
-                    <Label for="person-postal-code">Code Postal</Label>
-                    <Input id="person-postal-code" placeholder="Entré le code postal" bind:value={clients.codePostalProf} />
-                </div>
-                <div class="space-y-2">
-                    <Label for="person-city">Ville</Label>
-                    <Input id="person-city" placeholder="Entré la ville" bind:value={clients.villeProf} />
-                </div>
-                <div class="space-y-2">
-                    <Label for="person-tel-pro">Tél professionnel</Label>
-                    <Input id="person-tel-pro" type="tel" placeholder="Entré le numéro professionnel" on:input={allowOnlyNumbers} bind:value={clients.numeroTelProf} />
-                </div>
-                <div class="space-y-2">
-                    <Label for="person-tel-portable">Tél portable</Label>
-                    <Input id="person-tel-portable" type="tel" placeholder="Entré le numéro portable" on:input={allowOnlyNumbers} />
-                </div>
-            </div>
 
-            <div class="flex flex-col w-1/2 space-y-4">
-                <div class="space-y-2">
-                    <Label for="person-country">Pays</Label>
-                    <Input id="person-country" placeholder="Entré le pays" bind:value={clients.paysProf} />
+<div class="container mx-auto p-4 space-y-6">
+    <div class="flex flex-row justify-between">
+        <h1 class="text-3xl font-bold">Nouveau client</h1>
+        <Button variant="outline" href="/">Accueil</Button>
+    </div>
+    <Card>
+        <CardHeader>
+            <CardTitle>Informations principales</CardTitle>
+        </CardHeader>
+        <CardContent class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="space-y-2 flex flex-col">
+                    <div class="space-y-2">
+                        <Label for="nom-type">Nom</Label>
+                        <Input id="nom-type" placeholder="Entrée le Nom" bind:value={clients.nom}/>
+                    </div>
+                    <div class="space-y-2">
+                        <Label for="prenom-type">Prénom</Label>
+                        <Input id="prenom-type" placeholder="Entrée le prénom" bind:value={clients.prenom}/>
+                    </div>
+                    <div class="space-y-2">
+                        <Label for="titre-type">Titre</Label>
+                        <Input id="titre-type" placeholder="Entrée le titre" bind:value={clients.titre}/>
+                    </div>
                 </div>
-                <div class="space-y-2">
-                    <Popover.Root>
-                        <div class="flex flex-col space-y-2">
-                            <Label for="date">Date de paiement</Label>
-                            <Popover.Trigger asChild let:builder>
-                                <Button variant="outline" class={cn("h-[42px] w-full justify-start text-left font-normal", !datePaiementValue && "text-muted-foreground")} builders={[builder]}>
-                                    <CalendarIcon class="mr-2 h-4 w-4" />
-                                    {datePaiementValue ? df.format(datePaiementValue.toDate(getLocalTimeZone())) : "Choisir une date"}
-                                </Button>
-                            </Popover.Trigger>
-                        </div>
-                        <Popover.Content class="w-auto p-0">
-                            <Calendar bind:value={datePaiementValue} initialFocus />
-                        </Popover.Content>
-                    </Popover.Root>
-                </div>
-                <div class="space-y-2">
-                    <Label for="person-diplome">Diplôme faculté</Label>
-                    <Input id="person-diplome" placeholder="Entré le diplôme" bind:value={clients.diplomeFaculte} />
-                </div>
-                <div class="space-y-2">
-                    <Popover.Root>
-                        <div class="flex flex-col space-y-2">
-                            <Label for="date">Date du diplôme</Label>
-                            <Popover.Trigger asChild let:builder>
-                                <Button variant="outline" class={cn("h-[42px] w-full justify-start text-left font-normal", !dateDiplomeValue && "text-muted-foreground")} builders={[builder]}>
-                                    <CalendarIcon class="mr-2 h-4 w-4" />
-                                    {dateDiplomeValue ? df.format(dateDiplomeValue.toDate(getLocalTimeZone())) : "Choisir une date"}
-                                </Button>
-                            </Popover.Trigger>
-                        </div>
-                        <Popover.Content class="w-auto p-0">
-                            <Calendar bind:value={dateDiplomeValue} initialFocus />
-                        </Popover.Content>
-                    </Popover.Root>
-                </div>
-                <div class="space-y-2">
-                    <Label for="sexe">Sexe</Label>
-                    <Select.Root portal={null} selected={{
-                                value:clients.sexe,
-                                label:sexe.find(v=>v.value === clients.sexe)?.label
+                <div class="space-y-2 flex flex-col">
+                    <div class="space-y-2">
+                        <Label for="image">Image</Label>
+                        <Input id="image" type="file" />
+                    </div>
+                    <div class="space-y-2">
+                        <Label for="telephone-type">Téléphone</Label>
+                        <Input id="telephone-type" placeholder="Entrée le numéro de téléphone" bind:value={clients.numeroPort}/>
+                    </div>
+                    <div class="space-y-2">
+                        <Label for="email">Email</Label>
+                        <Input type="email" id="email" placeholder="email" bind:value={clients.adresseElectronique}/>
+                    </div>
+                    <div class="space-y-2 flex flex-row">
+                        <Popover.Root>
+                            <div class="flex flex-col space-y-2 mr-3">
+                                <Label for="date">Date de paiement</Label>
+                                <Popover.Trigger asChild let:builder>
+                                    <Button variant="outline" class={cn("w-[280px] justify-start text-left font-normal", !datePaiementValue && "text-muted-foreground")} builders={[builder]}>
+                                        <CalendarIcon class="mr-2 h-4 w-4" />
+                                        {datePaiementValue ? df.format(datePaiementValue.toDate(getLocalTimeZone())) : "Choisir une date"}
+                                    </Button>
+                                </Popover.Trigger>
+                            </div>
+                            <Popover.Content class="w-auto p-0">
+                                <Calendar bind:value={datePaiementValue} initialFocus />
+                            </Popover.Content>
+                        </Popover.Root>
+                        <div class="flex flex-col">
+                            <Label for="syndique">Syndiqué</Label>
+                            <Select.Root portal={null} selected={{
+                                value:clients.syndique,
+                                label:syndique.find(v=>v.value === clients.syndique)?.label
                             }}
-                                 onSelectedChange={(v) => v && (clients.sexe = v.value)}>
-                        <Select.Trigger class="w-full">
-                            <Select.Value placeholder="Sexe" />
-                        </Select.Trigger>
-                        <Select.Content>
-                            <Select.Group>
-                                <Select.Label>Sexe</Select.Label>
-                                {#each sexe as sexe}
-                                    <Select.Item value={sexe.value} label={sexe.label}>
-                                        {sexe.label}
-                                    </Select.Item>
-                                {/each}
-                            </Select.Group>
-                        </Select.Content>
-                        <Select.Input name="sexe" />
-                    </Select.Root>
-                </div>
-                <div class="space-y-2">
-                    <Label for="person-tel-domicile">Tél domicile</Label>
-                    <Input id="person-tel-domicile" type="tel" placeholder="Entré le numéro domicile" on:input={allowOnlyNumbers} bind:value={clients.numeroTelDomicile} />
-                </div>
-                <div class="space-y-2">
-                    <Label for="person-tel-fax">Tél fax</Label>
-                    <Input id="person-tel-fax" type="tel" placeholder="Entré le numéro fax" on:input={allowOnlyNumbers} />
+                            onSelectedChange={(v) => v && (clients.syndique = v.value)}>
+                                <Select.Trigger class="w-[180px]">
+                                    <Select.Value placeholder="Syndiqué" />
+                                </Select.Trigger>
+                                <Select.Content>
+                                    <Select.Group>
+                                        <Select.Label>Syndiqué</Select.Label>
+                                        {#each syndique as syndique}
+                                            <Select.Item value={syndique.value} label={syndique.label}>
+                                                {syndique.label}
+                                            </Select.Item>
+                                        {/each}
+                                    </Select.Group>
+                                </Select.Content>
+                                <Select.Input name="syndique"/>
+                            </Select.Root>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </CardContent>
-</Card>
+        </CardContent>
+    </Card>
+
+
+    <Tabs value="union" class="w-full">
+        <TabsList class="grid w-full grid-cols-4">
+            <TabsTrigger value="union" class="data-[state=active]:bg-[#EF4343]/30">Syndicat</TabsTrigger>
+            <TabsTrigger value="firm" class="data-[state=active]:bg-[#facc14]/30">Cabinet</TabsTrigger>
+            <TabsTrigger value="person" class="data-[state=active]:bg-[#1DAA51]/30">Personne</TabsTrigger>
+            <TabsTrigger value="remark" class="data-[state=active]:bg-[#0da2e7]/30">Remarque</TabsTrigger>
+        </TabsList>
+        <TabsContent value="union" class="mt-4">
+            <Syndicat bind:clients/>
+        </TabsContent>
+        <TabsContent value="firm" class="mt-4">
+            <Cabinet bind:clients/>
+        </TabsContent>
+        <TabsContent value="person" class="mt-4">
+            <Client bind:clients/>
+        </TabsContent>
+        <TabsContent value="remark" class="mt-4">
+            <Card class="border-[#0da2e7]/50">
+                <CardHeader>
+                    <CardTitle>Remarque</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <div class="space-y-2">
+                        <Label for="remarks">Remarque supplémentaires</Label>
+                        <Textarea id="remarks" placeholder="Entré des remarque supplémentaires" rows={4} bind:value={clients.remarques} />
+                    </div>
+                </CardContent>
+            </Card>
+        </TabsContent>
+    </Tabs>
+
+    <div class="flex justify-end space-x-4">
+        <Button variant="outline">Annuler</Button>
+        <Button on:click={generate} >Enregistrer le client</Button>
+    </div>
+</div>
