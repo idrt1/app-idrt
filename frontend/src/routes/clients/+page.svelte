@@ -10,12 +10,12 @@
 
     onMount(async () => {
         const id = $page.url.searchParams.get('id') || '';
-        clients = await GetClientByID(parseInt(id))
+        if (id) {
+            clients = await GetClientByID(parseInt(id));
+        }
     });
 
 </script>
 
-{#if clients}
-    <Client {clients}/>
-{/if}
 
+<Client {clients}/>

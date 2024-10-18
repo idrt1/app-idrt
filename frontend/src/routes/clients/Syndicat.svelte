@@ -153,8 +153,20 @@
             </Select.Root>
         </div>
         <div class="space-y-2">
-            <Label for="syndicat-number">Union Number</Label>
-            <Input id="syndicat-number" placeholder="Enter union number" />
+            <Label for="syndicat-number">N° Union</Label>
+            <Input id="syndicat-number" placeholder="Entrer un numéros d'union" bind:value={clients.idSyndique} />
+        </div>
+        <div class="space-y-2">
+            <Label for="syndicat-cotisation">Cotisation</Label>
+            <Input id="syndicat-cotisation" placeholder="Entrer une cotisation" bind:value={clients.cotisation} />
+        </div>
+        <div class="space-y-2">
+            <Label for="syndicat-cout">Coût</Label>
+            <Input id="syndicat-cout" placeholder="Entrer un coût" bind:value={clients.cout} />
+        </div>
+        <div class="space-y-2">
+            <Label for="syndicat-cotisationSpé">Cotisation spéciale</Label>
+            <Input id="syndicat-cotisationSpé" placeholder="Entrer une cotisation spé" bind:value={clients.cotiSpeciale} />
         </div>
     </CardContent>
 </Card>
