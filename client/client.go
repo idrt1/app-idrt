@@ -195,6 +195,14 @@ func (cm *ClientMananger) GetAllClient() ([]Client, error) {
 	return clients, nil
 }
 
+func (cm *ClientMananger) DeleteClientByID(id int) error {
+	_, err := cm.DB.Exec(`DELETE FROM client WHERE id = ?`, id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (cm *ClientMananger) GetClientByID(id int) (Client, error) {
 	row := cm.DB.QueryRow(`SELECT id, Nom, Prenom, AdresseElectronique, NumeroPort, Categorie, ConjointSynd, CotiSpeciale, Cotisation, Cout, D_ou_N, DateCreation, DatePaiement, IDSyndique, NumeroTelProf, PremierAnCoti, Syndique, Titre, TypeInstallation, CategorieCotiCat, CategorieCotiDep, AdresseProf1, AdresseProf2, Age, Association, CodePostalProf, DateDiplome, DateModification, DateNaissance, DiplomeFaculte, LieuExercice, NumeroTelDomicile, PaysProf, PersAideAssistante, PersAssistante, PersCollaborateur, PersFemmeDeMenage, PersLaboratoire, PersReceptionniste, Personnels, Remarques, Responsable, Sexe, TypeExercice, VilleProf FROM client WHERE id = ?`, id)
 

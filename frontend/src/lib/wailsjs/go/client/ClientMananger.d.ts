@@ -3,6 +3,8 @@
 import {client} from '../models';
 import {sql} from '../models';
 
+export function DeleteClientByID(arg1:number):Promise<void>;
+
 export function GetAllClient():Promise<Array<client.Client>>;
 
 export function GetClientByID(arg1:number):Promise<client.Client>;

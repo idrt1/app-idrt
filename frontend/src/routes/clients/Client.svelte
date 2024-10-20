@@ -16,6 +16,9 @@
     import { cn } from "$lib/utils.js";
     import { Calendar } from "$lib/components/ui/calendar/index.js";
     import * as Popover from "$lib/components/ui/popover/index.js";
+    import { DeleteClientByID } from "$lib/wailsjs/go/client/ClientMananger";
+    import * as AlertDialog from "$lib/components/ui/alert-dialog";
+
 
     export let clients = new client.Client();
 
@@ -39,7 +42,15 @@
     function generate() {
         InsertClient(clients).then((result) => {
             console.log(result);
+            window.location.href = "/";
         });
+    }
+
+    async function deleteUser() {
+        if (clients.id) {
+            await DeleteClientByID(clients.id);
+            window.location.href = "/";
+        }
     }
 
     $: clients.datePaiement = datePaiementValue ? formatDate(datePaiementValue.toDate(getLocalTimeZone())) : "";
@@ -49,7 +60,27 @@
 <div class="container mx-auto p-4 space-y-6">
     <div class="flex flex-row justify-between">
         <h1 class="text-3xl font-bold">Nouveau client</h1>
-        <Button variant="outline" href="/">Accueil</Button>
+        <div class="flex space-x-4">
+            <Button variant="outline" href="/">Accueil</Button>
+            <AlertDialog.Root>
+                <AlertDialog.Trigger asChild let:builder>
+                    <Button builders={[builder]} variant="outline">Supprimer</Button>
+                </AlertDialog.Trigger>
+                <AlertDialog.Content>
+                    <AlertDialog.Header>
+                        <AlertDialog.Title>Êtes-vous sûr de vouloir supprimer le client ?</AlertDialog.Title>
+                        <AlertDialog.Description>
+                            Cette action ne peut être annulée.
+                            Elle supprimera définitivement le compte et les données de nos serveurs.
+                        </AlertDialog.Description>
+                    </AlertDialog.Header>
+                    <AlertDialog.Footer>
+                        <AlertDialog.Cancel>Retour</AlertDialog.Cancel>
+                        <AlertDialog.Action on:click={deleteUser}>Continuer</AlertDialog.Action>
+                    </AlertDialog.Footer>
+                </AlertDialog.Content>
+            </AlertDialog.Root>
+        </div>
     </div>
     <Card>
         <CardHeader>
