@@ -192,7 +192,7 @@
     </Tabs>
 
     <div class="flex justify-end space-x-4">
-        <Button variant="outline">Annuler</Button>
+        <Button variant="outline" href="/">Annuler</Button>
         <Button on:click={generate} >Enregistrer le client</Button>
     </div>
 </div>
