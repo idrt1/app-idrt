@@ -12,6 +12,7 @@
         const id = $page.url.searchParams.get('id') || '';
         if (id) {
             clients = await GetClientByID(parseInt(id));
+            console.log(clients);
         }
     });
 

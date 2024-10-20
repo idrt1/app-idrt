@@ -11,6 +11,7 @@
     import {Checkbox} from "$lib/components/ui/checkbox";
     import * as Select from "$lib/components/ui/select";
     import {client} from "$lib/wailsjs/go/models";
+    import {onMount} from "svelte";
 
     const df = new DateFormatter("en-US", { dateStyle: "long" });
 
@@ -44,9 +45,15 @@
     ];
 
     function formatDate(date: Date): string {
-        const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
-        return date.toLocaleDateString('fr-FR', options);
+        return date.toISOString().split('T')[0];
     }
+
+    // onMount(() => {
+    //     dateCreationValue = clients.dateCreation ? DateValue(clients.dateCreation) : undefined;
+    //     dateInstallationValue = clients.dateInstallation ? DateValue(clients.dateInstallation) : undefined;
+    //     checkedYes = clients.conjointSynd === "O";
+    //     checkedNo = clients.conjointSynd === "N";
+    // });
 
     $:clients.dateCreation = dateCreationValue ? formatDate(dateCreationValue.toDate(getLocalTimeZone())) : "";
     $:clients.dateInstallation = dateInstallationValue ? formatDate(dateInstallationValue.toDate(getLocalTimeZone())) : "";
