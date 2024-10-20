@@ -12,3 +12,5 @@ export function GetClientByID(arg1:number):Promise<client.Client>;
 export function InitTable(arg1:sql.DB):Promise<void>;
 
 export function InsertClient(arg1:client.Client):Promise<void>;
+
+export function UpdateClient(arg1:client.Client):Promise<void>;

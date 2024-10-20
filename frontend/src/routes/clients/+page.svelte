@@ -18,4 +18,4 @@
 </script>
 
 
-<Client {clients}/>
+<Client {clients} mode="update"/>

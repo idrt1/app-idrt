@@ -17,10 +17,12 @@
     import { Calendar } from "$lib/components/ui/calendar/index.js";
     import * as Popover from "$lib/components/ui/popover/index.js";
     import { DeleteClientByID } from "$lib/wailsjs/go/client/ClientMananger";
+    import { UpdateClient } from "$lib/wailsjs/go/client/ClientMananger";
     import * as AlertDialog from "$lib/components/ui/alert-dialog";
 
 
     export let clients = new client.Client();
+    export let mode : "update" | "create" = "create";
 
     let datePaiementValue: DateValue | undefined = undefined;
 
@@ -40,12 +42,17 @@
     }
 
     function generate() {
-        InsertClient(clients).then((result) => {
-            console.log(result);
-            window.location.href = "/";
-        });
+        if (mode === "update") {
+            UpdateClient(clients).then((result) => {
+                window.location.href = "/";
+            });
+        }else{
+            InsertClient(clients).then((result) => {
+                console.log(result);
+                window.location.href = "/";
+            });
+        }
     }
-
     async function deleteUser() {
         if (clients.id) {
             await DeleteClientByID(clients.id);
@@ -64,7 +71,7 @@
             <Button variant="outline" href="/">Accueil</Button>
             <AlertDialog.Root>
                 <AlertDialog.Trigger asChild let:builder>
-                    <Button builders={[builder]} variant="outline">Supprimer</Button>
+                    <Button builders={[builder]} variant="destructive">Supprimer</Button>
                 </AlertDialog.Trigger>
                 <AlertDialog.Content>
                     <AlertDialog.Header>
@@ -76,7 +83,7 @@
                     </AlertDialog.Header>
                     <AlertDialog.Footer>
                         <AlertDialog.Cancel>Retour</AlertDialog.Cancel>
-                        <AlertDialog.Action on:click={deleteUser}>Continuer</AlertDialog.Action>
+                        <AlertDialog.Action on:click={deleteUser} class="bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700">Supprimer</AlertDialog.Action>
                     </AlertDialog.Footer>
                 </AlertDialog.Content>
             </AlertDialog.Root>
@@ -193,6 +200,6 @@
 
     <div class="flex justify-end space-x-4">
         <Button variant="outline" href="/">Annuler</Button>
-        <Button on:click={generate} >Enregistrer le client</Button>
+        <Button on:click={generate}>Enregistrer le client</Button>
     </div>
 </div>

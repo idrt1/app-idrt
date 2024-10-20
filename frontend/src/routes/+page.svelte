@@ -23,7 +23,7 @@
         <h1 class="text-3xl font-bold text-center text-foreground">SCD-17</h1>
         <div class="space-y-6">
             <div class="space-y-4 mx-auto text-center pt-4 pl-8" style="max-width: 1000px;">
-                <Button class="w-full" size="lg" href="/clients">
+                <Button class="w-full" size="lg" href="/clients/create">
                     <PlusCircle class="mr-2 h-5 w-5" />
                     Ajouter un client
                 </Button>

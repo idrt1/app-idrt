@@ -21,3 +21,7 @@ export function InitTable(arg1) {
 export function InsertClient(arg1) {
   return window['go']['client']['ClientMananger']['InsertClient'](arg1);
 }
+
+export function UpdateClient(arg1) {
+  return window['go']['client']['ClientMananger']['UpdateClient'](arg1);
+}
