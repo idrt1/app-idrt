@@ -4,6 +4,8 @@
     import { Label } from "$lib/components/ui/label";
     import { Checkbox } from "$lib/components/ui/checkbox";
     import { client } from "$lib/wailsjs/go/models";
+    import {afterUpdate} from "svelte";
+    import {CalendarDate} from "@internationalized/date";
 
     let checkedYes = false;
     let checkedNo = false;
@@ -18,17 +20,30 @@
 
     $: clients.d_ou_N = checkedYes ? "O" : checkedNo ? "N" : "";
 
-    function convertRolesToNumbers() {
-        clients.persAideAssistante = roles.aide ? "1" : "0";
-        clients.persCollaborateur = roles.collaborateur ? "1" : "0";
-        clients.persAssistante = roles.assistante ? "1" : "0";
-        clients.persReceptionniste = roles.receptioniste ? "1" : "0";
-        clients.persFemmeDeMenage = roles.femmeDeMenage ? "1" : "0";
-        clients.persLaboratoire = roles.laboratoire ? "1" : "0";
+
+    $: {
+        clients.persAideAssistante = roles.aide ? "1" : "";
+        clients.persCollaborateur = roles.collaborateur ? "1" : "";
+        clients.persAssistante = roles.assistante ? "1" : "";
+        clients.persReceptionniste = roles.receptioniste ? "1" : "";
+        clients.persFemmeDeMenage = roles.femmeDeMenage ? "1" : "";
+        clients.persLaboratoire = roles.laboratoire ? "1" : "";
     }
 
-    $: convertRolesToNumbers();
+    afterUpdate(() => {
+        roles.femmeDeMenage = clients.persFemmeDeMenage === "1";
+        roles.receptioniste = clients.persReceptionniste === "1";
+        roles.assistante = clients.persAssistante === "1";
+        roles.collaborateur = clients.persCollaborateur === "1";
+        roles.laboratoire = clients.persLaboratoire === "1";
+        roles.aide = clients.persAideAssistante === "1";
+
+        checkedYes = clients.d_ou_N === "O";
+        checkedNo = clients.d_ou_N === "N";
+    });
+
     export let clients : client.Client;
+
 
 </script>
 

@@ -12,13 +12,15 @@
     import { InsertClient } from "$lib/wailsjs/go/client/ClientMananger";
     import { client } from "$lib/wailsjs/go/models";
     import CalendarIcon from "lucide-svelte/icons/calendar";
-    import { DateFormatter, type DateValue, getLocalTimeZone } from "@internationalized/date";
+    import {CalendarDate, DateFormatter, type DateValue, getLocalTimeZone} from "@internationalized/date";
     import { cn } from "$lib/utils.js";
     import { Calendar } from "$lib/components/ui/calendar/index.js";
     import * as Popover from "$lib/components/ui/popover/index.js";
     import { DeleteClientByID } from "$lib/wailsjs/go/client/ClientMananger";
     import { UpdateClient } from "$lib/wailsjs/go/client/ClientMananger";
     import * as AlertDialog from "$lib/components/ui/alert-dialog";
+    import {afterUpdate} from "svelte";
+    import {goto} from "$app/navigation";
 
 
     export let clients = new client.Client();
@@ -37,28 +39,36 @@
     ];
 
     function formatDate(date: Date): string {
-        const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
-        return date.toLocaleDateString('fr-FR', options);
+        console.log(date.toISOString().split('T')[0]);
+        return date.toISOString().split('T')[0];
     }
 
     function generate() {
         if (mode === "update") {
             UpdateClient(clients).then((result) => {
-                window.location.href = "/";
+                goto("/");
             });
         }else{
             InsertClient(clients).then((result) => {
                 console.log(result);
-                window.location.href = "/";
+                goto("/");
             });
         }
     }
     async function deleteUser() {
         if (clients.id) {
             await DeleteClientByID(clients.id);
-            window.location.href = "/";
+            goto("/");
         }
     }
+
+    afterUpdate(() => {
+        if (clients.datePaiement) {
+            const datePaiement = new Date(clients.datePaiement);
+            datePaiementValue = new CalendarDate(datePaiement.getFullYear(), datePaiement.getMonth() + 1, datePaiement.getDate());
+        }
+    });
+
 
     $: clients.datePaiement = datePaiementValue ? formatDate(datePaiementValue.toDate(getLocalTimeZone())) : "";
 </script>

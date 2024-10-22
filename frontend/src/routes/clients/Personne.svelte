@@ -9,6 +9,7 @@
     ];
     import CalendarIcon from "lucide-svelte/icons/calendar";
     import {
+        CalendarDate,
         DateFormatter,
         type DateValue,
         getLocalTimeZone
@@ -19,6 +20,7 @@
     import { Button } from "$lib/components/ui/button";
     import {Checkbox} from "$lib/components/ui/checkbox";
     import {client} from "$lib/wailsjs/go/models";
+    import {afterUpdate} from "svelte";
 
     const df = new DateFormatter("en-US", { dateStyle: "long" });
     let dateDiplomeValue: DateValue | undefined = undefined;
@@ -28,10 +30,23 @@
         const input = event.target as HTMLInputElement;
         input.value = input.value.replace(/\D/g, '');
     }
+
     function formatDate(date: Date): string {
-        const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
-        return date.toLocaleDateString('fr-FR', options);
+        console.log(date.toISOString().split('T')[0]);
+        return date.toISOString().split('T')[0];
     }
+
+    afterUpdate(() => {
+        if (clients.dateDiplome) {
+            const diplomeDate = new Date(clients.dateDiplome);
+            dateDiplomeValue = new CalendarDate(diplomeDate.getFullYear(), diplomeDate.getMonth() + 1, diplomeDate.getDate());
+        }
+        if (clients.datePaiement) {
+            const paiementDate = new Date(clients.datePaiement);
+            datePaiementValue = new CalendarDate(paiementDate.getFullYear(), paiementDate.getMonth() + 1, paiementDate.getDate());
+        }
+
+    });
 
     export let clients : client.Client;
 

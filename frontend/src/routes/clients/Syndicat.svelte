@@ -11,7 +11,8 @@
     import {Checkbox} from "$lib/components/ui/checkbox";
     import * as Select from "$lib/components/ui/select";
     import {client} from "$lib/wailsjs/go/models";
-    import {onMount} from "svelte";
+    import {afterUpdate, onMount} from "svelte";
+    import { CalendarDate } from "@internationalized/date";
 
     const df = new DateFormatter("en-US", { dateStyle: "long" });
 
@@ -45,15 +46,26 @@
     ];
 
     function formatDate(date: Date): string {
+        console.log(date.toISOString().split('T')[0]);
         return date.toISOString().split('T')[0];
     }
 
-    // onMount(() => {
-    //     dateCreationValue = clients.dateCreation ? DateValue(clients.dateCreation) : undefined;
-    //     dateInstallationValue = clients.dateInstallation ? DateValue(clients.dateInstallation) : undefined;
-    //     checkedYes = clients.conjointSynd === "O";
-    //     checkedNo = clients.conjointSynd === "N";
-    // });
+
+
+    afterUpdate(() => {
+        if (clients.dateCreation) {
+            const creationDate = new Date(clients.dateCreation);
+            dateCreationValue = new CalendarDate(creationDate.getFullYear(), creationDate.getMonth() + 1, creationDate.getDate());
+        }
+        if (clients.dateInstallation) {
+            const installationDate = new Date(clients.dateInstallation);
+            dateInstallationValue = new CalendarDate(installationDate.getFullYear(), installationDate.getMonth() + 1, installationDate.getDate());
+        }
+
+        checkedYes = clients.conjointSynd === "O";
+        checkedNo = clients.conjointSynd === "N";
+    });
+
 
     $:clients.dateCreation = dateCreationValue ? formatDate(dateCreationValue.toDate(getLocalTimeZone())) : "";
     $:clients.dateInstallation = dateInstallationValue ? formatDate(dateInstallationValue.toDate(getLocalTimeZone())) : "";
