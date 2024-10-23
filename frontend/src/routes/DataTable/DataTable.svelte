@@ -79,6 +79,18 @@
             }
         }),
         table.column({
+            header: "Nom",
+            accessor: ({ nom }) => nom,
+            cell: (item) => {
+                return createRender(Actions, { nom: item.value });
+            },
+            plugins: {
+                sort: {
+                    disable: true
+                }
+            }
+        }),
+        table.column({
             header: "Email",
             accessor: ({ adresseElectronique }) => adresseElectronique,
             cell: ({ value }) => value.toLowerCase(),
@@ -93,18 +105,6 @@
                 }
             }
         }),
-        table.column({
-            header: "Nom",
-            accessor: ({ nom }) => nom,
-            cell: (item) => {
-                return createRender(Actions, { nom: item.value });
-            },
-            plugins: {
-                sort: {
-                    disable: true
-                }
-            }
-        })
     ]);
 
 
