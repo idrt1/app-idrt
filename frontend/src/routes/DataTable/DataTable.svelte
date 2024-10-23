@@ -22,6 +22,7 @@
     import { Input } from "$lib/components/ui/input/index.js";
     import {client} from "$lib/wailsjs/go/models";
     import {goto} from "$app/navigation";
+    import ArrowUp from "lucide-svelte/icons/arrow-up";
 
     export let clients: client.Client[] = [];
 
@@ -129,10 +130,125 @@
         console.log(clientId);
     }
 
+
+    function exportData() {
+        const csvContent = "data:text/csv;charset=utf-8,"
+            + [
+                "Nom",
+                "Prénom",
+                "Email",
+                "Numéro de portable",
+                "Catégorie",
+                "Conjoint syndiqué",
+                "Cotisation spéciale",
+                "Cotisation",
+                "Coût",
+                "D ou N",
+                "Date d'installation",
+                "Date de création",
+                "Date de paiement",
+                "ID Syndiqué",
+                "Numéro de téléphone professionnel",
+                "Premier an cotisation",
+                "Syndiqué",
+                "Titre",
+                "Type d'installation",
+                "Catégorie cotisation CAT",
+                "Catégorie cotisation DEP",
+                "Adresse professionnelle 1",
+                "Adresse professionnelle 2",
+                "Âge",
+                "Association",
+                "Code postal professionnel",
+                "Date de diplôme",
+                "Date de modification",
+                "Date de naissance",
+                "Diplôme faculté",
+                "Lieu d'exercice",
+                "Numéro de téléphone domicile",
+                "Pays professionnel",
+                "Personne aide assistante",
+                "Personne assistante",
+                "Personne collaborateur",
+                "Personne femme de ménage",
+                "Personne laboratoire",
+                "Personne réceptionniste",
+                "Personnels",
+                "Remarques",
+                "Responsable",
+                "Sexe",
+                "Type d'exercice",
+                "Ville professionnelle"
+            ].join(";") + "\n"
+            + clients.map(client => [
+                client.nom,
+                client.prenom,
+                client.adresseElectronique,
+                client.numeroPort,
+                client.categorie,
+                client.conjointSynd,
+                client.cotiSpeciale,
+                client.cotisation,
+                client.cout,
+                client.d_ou_N,
+                client.dateInstallation,
+                client.dateCreation,
+                client.datePaiement,
+                client.idSyndique,
+                client.numeroTelProf,
+                client.premierAnCoti,
+                client.syndique,
+                client.titre,
+                client.typeInstallation,
+                client.categorieCotiCat,
+                client.categorieCotiDep,
+                client.adresseProf1,
+                client.adresseProf2,
+                client.age,
+                client.association,
+                client.codePostalProf,
+                client.dateDiplome,
+                client.dateModification,
+                client.dateNaissance,
+                client.diplomeFaculte,
+                client.lieuExercice,
+                client.numeroTelDomicile,
+                client.paysProf,
+                client.persAideAssistante,
+                client.persAssistante,
+                client.persCollaborateur,
+                client.persFemmeDeMenage,
+                client.persLaboratoire,
+                client.persReceptionniste,
+                client.personnels,
+                client.remarques,
+                client.responsable,
+                client.sexe,
+                client.typeExercice,
+                client.villeProf
+            ].join(";")).join("\n");
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "clients.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+
+
 </script>
 
 <div class="w-full pt-4 pl-8">
-    <Input class="max-w-sm" placeholder="Rechercher..." type="text" bind:value={$filterValue}/>
+    <div class="flex items-center space-x-2 justify-between">
+        <Input class="max-w-sm" placeholder="Rechercher..." type="text" bind:value={$filterValue}/>
+        <Button variant="outline" on:click={exportData}>
+            Exporter
+            <ArrowUp class="ml-2 h-4 w-4"/>
+        </Button>
+    </div>
     <div class="rounded-md border mt-4">
         <Table.Root {...$tableAttrs}>
             <Table.Header>

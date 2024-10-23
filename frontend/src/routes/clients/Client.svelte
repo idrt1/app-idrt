@@ -88,7 +88,7 @@
                         <AlertDialog.Title>Êtes-vous sûr de vouloir supprimer le client ?</AlertDialog.Title>
                         <AlertDialog.Description>
                             Cette action ne peut être annulée.
-                            Elle supprimera définitivement le compte et les données de nos serveurs.
+                            Elle supprimera définitivement le compte.
                         </AlertDialog.Description>
                     </AlertDialog.Header>
                     <AlertDialog.Footer>
