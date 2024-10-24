@@ -277,6 +277,7 @@
                     </Subscribe>
                 {/each}
             </Table.Header>
+
             <Table.Body {...$tableBodyAttrs}>
                 {#each $pageRows as row (row.id)}
                     <Subscribe rowAttrs={row.attrs()} let:rowAttrs>
