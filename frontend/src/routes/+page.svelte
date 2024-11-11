@@ -5,6 +5,9 @@
     import { GetAllClient } from "$lib/wailsjs/go/client/ClientMananger";
     import { client } from "$lib/wailsjs/go/models";
     import DataTable from "./DataTable/DataTable.svelte";
+    import {Export, Insert} from "$lib/wailsjs/go/main/App";
+    import ArrowUp from "lucide-svelte/icons/arrow-up";
+
 
     let clients: client.Client[] = [];
 
@@ -15,6 +18,13 @@
             console.error(err)
         }
     })
+
+    async function insert() {
+        clients = []
+        await Insert()
+        clients = await GetAllClient()
+        console.log(clients)
+    }
 </script>
 
 
@@ -28,13 +38,25 @@
                     Ajouter un client
                 </Button>
             </div>
-            {#if clients.length !== 0}
-                <div class="w-full overflow-x-auto mx-auto" style="max-width: 1000px;">
-                    <DataTable clients={clients}/>
-                </div>
-            {:else}
-                <p class="text-center text-muted-foreground">Aucun client trouvé</p>
-            {/if}
+            <div class="flex items-center space-x-2 justify-between">
+                <Button variant="outline" on:click={Export}>
+                    Exporter
+                    <ArrowUp class="ml-2 h-4 w-4"/>
+                </Button>
+                <Button variant="outline" on:click={insert}>
+                    Importer
+                    <ArrowUp class="ml-2 h-4 w-4"/>
+                </Button>
+            </div>
+            {#key clients}
+                {#if clients?.length}
+                    <div class="w-full overflow-x-auto mx-auto" style="max-width: 1000px;">
+                        <DataTable clients={clients}/>
+                    </div>
+                {:else}
+                    <p class="text-center text-muted-foreground">Aucun client trouvé</p>
+                {/if}
+            {/key}
         </div>
     </main>
 </div>
