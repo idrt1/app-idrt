@@ -1,18 +1,16 @@
-# 🚀 Projet App idrt
+# 🚀 IDRT Project
 
-Bienvenue dans le projet **IDRT** ! 🌐 Une application pour la gestion de client ! 🔍
+Welcome to the **IDRT** project! 🌐 An application for client management! 🔍
 
-## ⚙️ Technologies Utilisées
+## ⚙️ Technologies Used
 - 🐹 **Go** - Backend
-- 💻 **Svelte** - Framework frontend léger et réactif
-- 🎨 **Tailwind** - Pour le style de l'interface
-- 🛠️ **Shadcn** - Composants réutilisables et design system
+- 💻 **Svelte** - Lightweight and reactive frontend framework
+- 🎨 **Tailwind** - For styling the interface
+- 🛠️ **Shadcn** - Reusable components and design system
 - 🪖 **Wails** - App
 
-
-## 🚧 Projet en cours
-
+## 🚧 Ongoing Project
 
 ---
 
-<p style="text-align: center;">✨ Merci d'avoir pris le temps de découvrir le projet <strong>IDRT</strong> ! ✨</p>
+<p style="text-align: center;">✨ Thank you for taking the time to learn about the <strong>IDRT</strong> project! ✨</p>
